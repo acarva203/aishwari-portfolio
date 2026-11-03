@@ -47,7 +47,7 @@ Both chosen against the skill's overused-face list and against the AI cream-seri
 
 ## Topology
 
-Hybrid: one rich homepage (masthead → `In[1]` statement + `Fig.1` featured → Projects → Research → Writing → `Out[]` resume/contact, lean 2–4 items per section) plus deep subpages `/project/[slug]` and `/writing/[slug]` in the same world.
+Single page: introduction → featured project → project index and expandable case studies → skills → full experience → education → notes → contact form. Section anchors keep exploration on the homepage. Legacy routes redirect to the relevant section.
 
 ## States
 

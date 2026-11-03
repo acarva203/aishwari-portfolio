@@ -73,6 +73,7 @@ const {
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="masthead">
       <div class="masthead-in">
         <div class="brand">
@@ -87,10 +88,10 @@ const {
           <span class="kernel-label" data-kernel-label>● notebook — kernel ready</span>
         </div>
         <nav class="nav" aria-label="Sections">
-          <a class="hide-sm" href="/projects">projects</a>
-          <a class="hide-sm" href="/log">log</a>
-          <a class="cta" href="/resume">resume</a>
-          <a class="cta kw" href="/contact">contact →</a>
+          <a class="hide-sm" href="/#projects">projects</a>
+          <a class="hide-sm" href="/#experience">experience</a>
+          <a class="cta" href="/#education">education</a>
+          <a class="cta kw" href="/#contact">contact →</a>
           <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
             <span class="glyph" aria-hidden="true">◐</span> <span data-theme-label>dark</span>
           </button>
@@ -98,10 +99,10 @@ const {
       </div>
     </header>
 
-    <main class="wrap">
+    <main class="wrap" id="main">
       <slot />
       <footer class="foot">
-        <span>© 2025 Aishwari Sirur — rendered as a notebook.</span>
+        <span>© {new Date().getFullYear()} Aishwari Sirur — rendered as a notebook.</span>
         <span class="com"># built with Astro · aishwari sirur — ai engineer</span>
       </footer>
     </main>
@@ -153,10 +154,10 @@ const {
 
         // 2) Type a command anywhere to run a hidden REPL cell.
         var COMMANDS = {
-          whoami: 'aishwari sirur — ai engineer · cs @ uc davis · open to summer 2026',
-          ls: 'projects/  log/  resume.pdf  contact/',
+          whoami: 'aishwari sirur — ai engineer · cs @ uc davis · ai, data, and product',
+          ls: 'projects · experience · education · contact',
           help: "commands: whoami · ls · sudo hire · help  (esc to dismiss)",
-          'sudo hire': ['permission granted → ', 'get in touch', '/contact'],
+          'sudo hire': ['permission granted → ', 'get in touch', '/#contact'],
         };
         var buf = '';
         var clearTimer = null;

@@ -15,3 +15,6 @@ npm-debug.log*
 .DS_Store
 # impeccable dev tooling (reinstall via: npx impeccable install)
 .claude/
+
+# local visual verification captures
+.impeccable/review/

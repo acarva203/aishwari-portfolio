@@ -17,16 +17,9 @@ npm run build    # -> dist/
 npm run preview  # serve the build locally
 ```
 
-## Pages
+## One-page structure
 
-| Route | What it is |
-|---|---|
-| `/` | Home — pinned grey→ink hero scrub, featured project, projects, experience highlights, contact CTA |
-| `/projects` | Full project list |
-| `/project/[slug]` | Case-study page per project |
-| `/resume` | Education, skills, full experience timeline, + PDF download |
-| `/log` | Running updates feed + weekly/monthly goal progress bars |
-| `/contact` | Contact form (emails via Web3Forms) |
+All portfolio content lives at `/`: introduction, featured work, expandable case studies, skills, experience, education, notes, and contact. Navigation uses section anchors. Previous page URLs redirect to the corresponding homepage section, including individual project links.
 
 ## Content & data
 

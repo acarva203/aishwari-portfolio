@@ -1,13 +1,17 @@
 ---
 import Notebook from '../layouts/Notebook.astro';
-import { getCollection } from 'astro:content';
+import ContactForm from '../components/ContactForm.astro';
+import { getCollection, render } from 'astro:content';
 import { experience } from '../data/experience';
 import ExperienceList from '../components/ExperienceList.astro';
-import { stack } from '../data/skills';
+import { skills } from '../data/skills';
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
+const updates = (await getCollection('updates')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const updateDetails = await Promise.all(updates.map(async (update) => ({ update, ...(await render(update)) })));
+const projectDetails = await Promise.all(projects.map(async (project) => ({ project, ...(await render(project)) })));
 const featured = projects.find((p) => p.data.featured) ?? projects[0];
 const restProjects = projects.filter((p) => p.id !== featured?.id);
 
@@ -21,50 +25,26 @@ const catCode: Record<string, string> = {
 const idFor = (cats: string[], n: number) =>
   `${catCode[cats[0]] ?? 'SR'}·${String(n).padStart(3, '0')}`;
 
-// Hero statement → word spans for the pinned grey→ink scroll scrub.
-const heroSegments: { t: string; bold: boolean }[] = [
-  { t: "I'm", bold: false },
-  { t: 'Aishwari Sirur', bold: true },
-  { t: ', a CS major at', bold: false },
-  { t: 'UC Davis', bold: true },
-  { t: 'building at the intersection of', bold: false },
-  { t: 'AI, data, and product', bold: true },
-  { t: '. I turn models and messy data into things people can actually use — and I want to do it as an', bold: false },
-  { t: 'AI engineering intern', bold: true },
-  { t: 'this summer.', bold: false },
-];
-const heroWords = heroSegments.flatMap((seg) =>
-  seg.t.split(/\s+/).map((w) => ({ w, bold: seg.bold }))
-);
 ---
 
 <Notebook>
-  <script is:inline>
-    // Enable the grey→ink hero scrub only with JS + motion allowed. Set before
-    // the hero parses so it renders grey (no flash); no-JS keeps full-ink text.
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.documentElement.classList.add('js-hero');
-    }
-  </script>
+  <h1 class="sr-only">Aishwari Sirur — AI Engineer</h1>
 
-  <h1 class="sr-only">Aishwari Sirur — AI Engineer (summer 2026 internship candidate)</h1>
-
-  {/* In[1] — statement, pinned while scroll fills it in */}
-  <section class="hero-pin-wrap">
+  {/* In[1] — introduction */}
+  <section class="hero-pin-wrap" id="about">
    <div class="hero-pin">
     <section class="cell">
       <div class="cell-gutter">In[<span>1</span>]:</div>
       <div class="cell-body">
         <div class="celltag mono">whoami<span class="com">()  → identity</span></div>
         <p class="prose lead" id="hero-statement">
-          {heroWords.map((hw, i) => (
-            <>
-              {i > 0 ? ' ' : ''}
-              <span class:list={['hero-word', { bold: hw.bold }]}>{hw.w}</span>
-            </>
-          ))}
+          I'm <strong>Aishwari Sirur</strong>, a CS major at <strong>UC Davis</strong>
+          building at the intersection of <strong>AI, data, and product</strong>.
+          I turn models and messy data into things people can actually use —
+          and I want to do it as an <strong>AI engineering intern</strong>.
         </p>
-        <p class="comment-line">ai engineer · data science · product — available for summer 2026 internships</p>
+        <p class="comment-line">cs @ uc davis · technology management + statistics</p>
+        <div class="hero-actions mono"><a class="primary-link" href="#featured">Explore my work ↓</a><a href="#contact">Get in touch →</a></div>
         <details class="peek">
           <summary>source</summary>
           <pre><span class="kw">def</span> <span class="fn">whoami</span>():
@@ -73,7 +53,6 @@ const heroWords = heroSegments.flatMap((seg) =>
         school=<span class="str">"UC Davis — CS (Technology Management + Statistics)"</span>,
         focus=[<span class="str">"AI engineering"</span>, <span class="str">"data science"</span>, <span class="str">"product"</span>],
         now=[<span class="str">"LLM fine-tuning"</span>, <span class="str">"agentic workflows"</span>],
-        open_to=<span class="str">"summer 2026 internships"</span>,
     )  <span class="com"># scroll for the work ↓</span></pre>
         </details>
       </div>
@@ -117,7 +96,7 @@ const heroWords = heroSegments.flatMap((seg) =>
             </div>
 
             <div class="figure-actions">
-              <a href={`/project/${featured.id}`}>open case study <span class="arr">→</span></a>
+              <a href={`#project-${featured.id}`}>read case study <span class="arr">→</span></a>
               {featured.data.href && (
                 <a href={featured.data.href} rel="noopener">live <span class="arr">↗</span></a>
               )}
@@ -136,10 +115,10 @@ const heroWords = heroSegments.flatMap((seg) =>
     <section class="cell" id="projects">
       <div class="cell-gutter">In[<span>2</span>]:</div>
       <div class="cell-body">
-        <div class="celltag celltag--row mono"><span><span class="fn">projects</span>.list(<span class="com">exclude=featured</span>)</span><a class="viewall" href="/projects">all {projects.length} →</a></div>
+        <div class="celltag celltag--row mono"><span><span class="fn">projects</span>.list(<span class="com">exclude=featured</span>)</span><span class="viewall">{projects.length} projects</span></div>
         <div class="entries">
           {restProjects.map((p, i) => (
-            <a class="entry" href={`/project/${p.id}`}>
+            <a class="entry" href={`#project-${p.id}`}>
               <span class="entry-id">{idFor(p.data.categories, i + 2)}</span>
               <span class="entry-main">
                 <span class="entry-title">
@@ -159,27 +138,74 @@ const heroWords = heroSegments.flatMap((seg) =>
     </section>
   )}
 
+  <section class="cell" id="case-studies">
+    <div class="cell-gutter">Out[<span class="out">2</span>]:</div>
+    <div class="cell-body">
+      <h2 class="section-title">Behind the work</h2>
+      <div class="project-details">
+        {projectDetails.map(({ project: p, Content }) => (
+          <details class="project-detail" id={`project-${p.id}`}>
+            <summary><span>{p.data.title}</span><span class="detail-toggle" aria-hidden="true">+</span></summary>
+            <div class="project-content">
+              <p class="project-meta mono">{p.data.timeline} · {p.data.team}</p>
+              <div class="article-body"><Content /></div>
+              <div class="chips chips--light">{p.data.tools.map(tool => <span class="chip">{tool}</span>)}</div>
+              {(p.data.href || p.data.repo) && <p class="project-links mono">
+                {p.data.href && <a href={p.data.href}>Visit project ↗</a>}
+                {p.data.repo && <a href={p.data.repo}>View code ↗</a>}
+              </p>}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
   {/* In[3] — tech-stack showcase */}
   <section class="cell" id="stack">
     <div class="cell-gutter">In[<span>3</span>]:</div>
     <div class="cell-body">
       <div class="celltag mono"><span class="fn">stack</span>  <span class="com"># tools I reach for</span></div>
-      <div class="chips chips--light stack-chips">
-        {stack.map((s) => <span class="chip">{s}</span>)}
-      </div>
+      {skills.map(({ group, items }) => <div class="skillgroup">
+        <h3 class="glabel">{group}</h3>
+        <div class="chips chips--light stack-chips">
+          {items.map(item => <span class="chip">{item}</span>)}
+        </div>
+      </div>)}
     </div>
   </section>
 
-  {/* In[4] — experience (expandable; full list on /resume) */}
+  {/* In[4] — full experience, expandable inline */}
   {experience.some((r) => r.highlight) && (
     <section class="cell" id="experience">
       <div class="cell-gutter">In[<span>4</span>]:</div>
       <div class="cell-body">
-        <div class="celltag celltag--row mono"><span><span class="fn">experience</span>.highlights()</span><a class="viewall" href="/resume">full résumé →</a></div>
-        <ExperienceList roles={experience.filter((r) => r.highlight)} />
+        <div class="celltag celltag--row mono"><span><span class="fn">experience</span>.timeline()</span><a class="viewall" href="#education">education ↓</a></div>
+        <ExperienceList roles={experience} />
       </div>
     </section>
   )}
+
+  <section class="cell" id="education">
+    <div class="cell-gutter">In[<span>5</span>]:</div>
+    <div class="cell-body">
+      <h2 class="section-title">Education</h2>
+      <h3>University of California, Davis</h3>
+      <p>B.S. Computer Science · concentrations in Technology Management &amp; Statistics</p>
+      <p class="comment-line">currently exploring LLM fine-tuning and agentic workflows</p>
+    </div>
+  </section>
+
+  <section class="cell" id="log">
+    <div class="cell-gutter">In[<span>6</span>]:</div>
+    <div class="cell-body">
+      <h2 class="section-title">Notes &amp; explorations</h2>
+      {updateDetails.map(({ update, Content }) => <details class="project-detail">
+        <summary><span>{update.data.title}</span><span class="detail-toggle" aria-hidden="true">+</span></summary>
+        <div class="project-content"><p class="project-meta mono">{update.data.date} · {update.data.tag}</p><div class="article-body"><Content /></div></div>
+      </details>)}
+    </div>
+  </section>
 
   {/* Out[] — contact */}
   <section class="cell" id="contact">
@@ -187,50 +213,24 @@ const heroWords = heroSegments.flatMap((seg) =>
     <div class="cell-body">
       <div class="outcell">
         <h2>Let's build something.</h2>
-        <p>Open to summer 2026 AI engineering internships — and always up to talk about anything above.</p>
+        <p>Have a role, a project, or a question? I’d love to hear from you.</p>
         <div class="outlinks">
-          <a href="/contact">send a message <span class="arr">→</span></a>
           <a href="mailto:asirur@ucdavis.edu">email <span class="arr">→</span></a>
           <a href="https://www.linkedin.com/in/aishwari-sirur" rel="noopener">linkedin <span class="arr">↗</span></a>
           <a href="https://github.com/acarva203" rel="noopener">github <span class="arr">↗</span></a>
-          <a href="/resume">resume <span class="arr">→</span></a>
         </div>
       </div>
+      <ContactForm />
     </div>
   </section>
 </Notebook>
 
 <script>
-  // Pinned scroll-scrub: while the hero is pinned, map scroll progress through
-  // the runway to how many words have turned from grey to full ink. The pin
-  // (CSS position:sticky) holds the hero until progress hits 1, so you scroll
-  // through the whole statement before the rest of the site moves.
-  // rAF-throttled; passive listeners.
-  const wrap = document.querySelector<HTMLElement>('.hero-pin-wrap');
-  const hero = document.getElementById('hero-statement');
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (wrap && hero && !reduce) {
-    const words = Array.from(hero.querySelectorAll('.hero-word'));
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const total = wrap.offsetHeight - window.innerHeight; // scrollable while pinned
-      const scrolled = Math.min(total, Math.max(0, -wrap.getBoundingClientRect().top));
-      const p = total > 0 ? scrolled / total : 1;
-      const n = Math.round(p * words.length);
-      for (let i = 0; i < words.length; i++) words[i].classList.toggle('lit', i < n);
-    };
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          window.requestAnimationFrame(update);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-    window.addEventListener('resize', update, { passive: true });
-    update();
+  function openProject() {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const detail = document.getElementById(id);
+    if (detail instanceof HTMLDetailsElement) detail.open = true;
   }
+  window.addEventListener("hashchange", openProject);
+  openProject();
 </script>

@@ -1,49 +1,7 @@
 ---
-import Notebook from '../../layouts/Notebook.astro';
-import { getCollection, render } from 'astro:content';
-
+import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map((p) => ({ params: { slug: p.id }, props: { entry: p } }));
+  return (await getCollection('projects')).map(project => ({ params: { slug: project.id } }));
 }
-
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+return Astro.redirect(`/#project-${Astro.params.slug}`);
 ---
-
-<Notebook title={`${entry.data.title} — Aishwari Sirur`} description={entry.data.blurb}>
-  <article class="article cell run">
-    <div class="cell-gutter">In[<span>·</span>]:</div>
-    <div class="cell-body">
-      <a class="backlink" href="/#projects">← back to notebook</a>
-      <div class="celltag mono" style="margin-top:1rem">
-        <span class="fn">open</span>("{entry.id}")  <span class="com"># {entry.data.categories.join(' · ')}</span>
-      </div>
-      <h1>{entry.data.title}</h1>
-      <p class="lede">{entry.data.blurb}</p>
-
-      <div class="summary" style="max-width:34rem">
-        <dl>
-          <div><dt>metric</dt><dd><span class="num">{entry.data.metricValue}</span> — {entry.data.metricLabel}</dd></div>
-          <div><dt>timeline</dt><dd>{entry.data.timeline} · {entry.data.team}</dd></div>
-        </dl>
-      </div>
-
-      {entry.data.tools.length > 0 && (
-        <div class="chips" style="margin-top:1.1rem">
-          {entry.data.tools.map((s) => (
-            <span class="chip" style="color:var(--muted);border-color:var(--rule)">{s}</span>
-          ))}
-        </div>
-      )}
-      {entry.data.href && (
-        <p style="margin-top:1rem" class="mono">
-          <a href={entry.data.href} rel="noopener">visit live site ↗</a>
-        </p>
-      )}
-      <div class="article-body">
-        <Content />
-      </div>
-    </div>
-  </article>
-</Notebook>
