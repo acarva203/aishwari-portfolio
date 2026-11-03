@@ -57,7 +57,7 @@
   --syn-str: #34d399;
   --syn-num: #fbbf24;
   --syn-fn: #60a5fa;
-  --syn-com: #64748b;
+  --syn-com: #94a3b8;
   --syn-str-text: #34d399; /* already bright enough on the dark ground */
   --grid: rgba(231, 234, 240, 0.028);
 
@@ -221,23 +221,12 @@ a:hover { text-decoration-color: var(--syn-fn); }
    from light grey to full ink, one at a time. Only once the whole statement is
    filled does the pin release and the rest of the site scroll up.
    Gated behind :root.js-hero so no-JS / reduced-motion keeps full-ink text. */
-.hero-pin-wrap { position: relative; height: 200vh; }
-.hero-pin {
-  position: sticky; top: 0;
-  min-height: 100vh;
-  display: flex; align-items: center;
-}
-.hero-pin .cell { width: 100%; margin: 0; }
-
-.hero-word { transition: color 0.12s linear; }
+.hero-pin-wrap { padding: clamp(3rem, 9vw, 7rem) 0 1rem; }
+.hero-pin .cell { margin: 0; }
 .hero-word.bold { font-weight: 700; }
-/* resting grey is legible large text (~3:1), then fills to full ink on scroll */
-:root.js-hero .hero-word { color: color-mix(in srgb, var(--ink) 42%, var(--paper)); }
-:root.js-hero .hero-word.lit { color: var(--ink); }
-
-@media (max-width: 720px) {
-  .hero-pin-wrap { height: 180vh; }
-}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.8rem 0; font-size: 14px; }
+.hero-actions a { padding: .5rem 0; }
+.primary-link { font-weight: 700; }
 .comment-line { font-family: var(--mono); font-size: 13px; color: var(--syn-com); margin-top: 0.9rem; }
 .comment-line::before { content: "# "; }
 
@@ -448,3 +437,34 @@ h1,h2,h3 { font-family: var(--sans); font-weight: 700; letter-spacing: -0.02em; 
 .backlink { font-family: var(--mono); font-size: 13px; color: var(--syn-kw); text-decoration: none; }
 .backlink:hover { text-decoration: underline; }
 .synthetic-note { font-family: var(--mono); font-size: 12px; color: var(--syn-num); border: 1px dashed color-mix(in srgb, var(--syn-num) 45%, transparent); border-radius: 6px; padding: 0.5rem 0.8rem; display: inline-block; margin-bottom: 1.5rem; }
+
+/* One continuous notebook: navigation and expanded work stay on the page. */
+[id] { scroll-margin-top: 6rem; }
+.section-title { font-size: 1.6rem; margin-bottom: 1.4rem; }
+.project-detail { border-bottom: 1px solid var(--rule); }
+.project-details { border-top: 1px solid var(--rule); }
+.project-detail > summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.2rem 0; cursor: pointer; font-weight: 700; list-style: none; }
+.project-detail > summary::-webkit-details-marker { display: none; }
+.project-detail > summary:hover { color: var(--syn-fn); }
+.detail-toggle { font-family: var(--mono); color: var(--syn-kw); font-size: 1.3rem; }
+.project-detail[open] .detail-toggle { transform: rotate(45deg); }
+.project-content { padding: 0 0 1.7rem; }
+.project-meta { font-size: .8rem; color: var(--muted); }
+.project-content .article-body { margin-top: 1rem; }
+.project-links { display: flex; gap: 1.4rem; font-size: .85rem; }
+#contact .form { margin-top: 2rem; }
+.entry-blurb, .entry-refs { display: block; }
+.skip-link { position: fixed; top: -5rem; left: 1rem; z-index: 100; padding: .8rem 1rem; background: var(--surface); }
+.skip-link:focus { top: 1rem; }
+input, textarea { caret-color: var(--syn-kw); }
+@media (max-width: 850px) { .kernel-label { display: none; } }
+@media (max-width: 560px) {
+  .masthead-in { flex-wrap: wrap; gap: .3rem; }
+  .nav { width: 100%; justify-content: space-between; gap: .6rem; font-size: 12px; }
+  .nav .hide-sm { display: inline-flex; }
+  .nav a[href="/#education"] { display: none; }
+  .prose.lead { font-size: 1.5rem; }
+  .figure-body { padding: 1.1rem; }
+  .figure-bar { flex-wrap: wrap; }
+  .celltag--row { flex-wrap: wrap; }
+}
