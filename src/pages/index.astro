@@ -6,7 +6,8 @@ import { experience } from '../data/experience';
 import ExperienceList from '../components/ExperienceList.astro';
 import { skills } from '../data/skills';
 
-const projects = (await getCollection('projects')).sort(
+const experienceProjectIds = new Set(experience.map(role => role.projectId).filter(Boolean));
+const projects = (await getCollection('projects')).filter(project => !experienceProjectIds.has(project.id)).sort(
   (a, b) => a.data.order - b.data.order
 );
 const updates = (await getCollection('updates')).sort((a, b) => b.data.date.localeCompare(a.data.date));
@@ -215,11 +216,11 @@ const idFor = (cats: string[], n: number) =>
         <h2>Let's build something.</h2>
         <p>Have a role, a project, or a question? I’d love to hear from you.</p>
         <div class="outlinks">
-          <a href="mailto:asirur@ucdavis.edu">email <span class="arr">→</span></a>
           <a href="https://www.linkedin.com/in/aishwari-sirur" rel="noopener">linkedin <span class="arr">↗</span></a>
           <a href="https://github.com/acarva203" rel="noopener">github <span class="arr">↗</span></a>
         </div>
       </div>
+      <h2 class="section-title" id="contact-form-heading" style="margin-top:2rem">Contact</h2>
       <ContactForm />
     </div>
   </section>

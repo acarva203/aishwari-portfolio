@@ -1,7 +1,7 @@
 ---
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || '72ff3b51-d1e2-4622-82b4-6e4988f2cd51';
 ---
-      <form id="contact-form" class="form" novalidate>
+      <form id="contact-form" class="form" aria-labelledby="contact-form-heading" novalidate>
         <input type="hidden" name="access_key" value={accessKey} />
         <input type="hidden" name="subject" value="New message from your portfolio contact form" />
         <input type="hidden" name="from_name" value="Portfolio contact form" />
