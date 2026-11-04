@@ -9,6 +9,7 @@ function getArtworkScale() {
 
 export default function App() {
   const [scale, setScale] = useState(getArtworkScale)
+  const [isRotated, setIsRotated] = useState(false)
 
   useEffect(() => {
     const resizeArtwork = () => setScale(getArtworkScale())
@@ -21,7 +22,9 @@ export default function App() {
     <main className="artwork-stage">
       <button
         aria-label="AS kinetic artwork"
+        aria-pressed={isRotated}
         className="artwork-button"
+        onClick={() => setIsRotated((rotated) => !rotated)}
         type="button"
       >
         <span
@@ -29,7 +32,7 @@ export default function App() {
           className="artwork-canvas"
           style={{ transform: `translate(-50%, -50%) scale(${scale})` }}
         >
-          <span className="artwork-origin">
+          <span className={`artwork-origin${isRotated ? " is-rotated" : ""}`}>
             <Group198 />
           </span>
         </span>

@@ -377,10 +377,7 @@ const imgEllipse3 = `${assetPathPrefix}/e3e0e.svg`
 export default function Group198() {
   return (
     <div className="contents relative size-full" data-node-id="6024:2290">
-      <div
-        className="absolute contents left-[1369px] top-[587px]"
-        data-node-id="6024:572"
-      >
+      <div className="ring-layer ring-layer-forward" data-node-id="6024:572">
         <div
           className="absolute h-[316.373px] left-[1520.57px] top-[1241.28px] w-[43.845px]"
           data-node-id="6024:15"
@@ -1680,10 +1677,7 @@ export default function Group198() {
           </div>
         </div>
       </div>
-      <div
-        className="absolute contents left-[1528px] top-[746px]"
-        data-node-id="6024:573"
-      >
+      <div className="ring-layer ring-layer-reverse" data-node-id="6024:573">
         <div
           className="absolute h-[274.21px] left-[1659.59px] top-[1313.08px] w-[38.066px]"
           data-node-id="6024:292"
@@ -2983,10 +2977,7 @@ export default function Group198() {
           </div>
         </div>
       </div>
-      <div
-        className="absolute contents left-[1684px] top-[894px]"
-        data-node-id="6024:575"
-      >
+      <div className="ring-layer ring-layer-forward" data-node-id="6024:575">
         <div
           className="absolute h-[234.904px] left-[1796.73px] top-[1379.79px] w-[32.609px]"
           data-node-id="6024:576"
@@ -4286,10 +4277,7 @@ export default function Group198() {
           </div>
         </div>
       </div>
-      <div
-        className="absolute contents left-[1816px] top-[1016px]"
-        data-node-id="6024:856"
-      >
+      <div className="ring-layer ring-layer-reverse" data-node-id="6024:856">
         <div
           className="absolute h-[201.878px] left-[1912.88px] top-[1433.49px] w-[28.024px]"
           data-node-id="6024:857"
