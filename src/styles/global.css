@@ -170,7 +170,8 @@ a:hover { text-decoration-color: var(--syn-fn); }
 .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
 .theme-toggle .glyph { color: var(--syn-num); }
 @media (max-width: 720px) {
-  .nav .hide-sm { display: none; }
+  .masthead-in { flex-wrap: wrap; }
+  .nav { width: 100%; justify-content: space-between; }
   .nav { gap: 0.8rem; }
   .theme-toggle [data-theme-label] { display: none; }
 }
@@ -461,10 +462,28 @@ input, textarea { caret-color: var(--syn-kw); }
 @media (max-width: 560px) {
   .masthead-in { flex-wrap: wrap; gap: .3rem; }
   .nav { width: 100%; justify-content: space-between; gap: .6rem; font-size: 12px; }
-  .nav .hide-sm { display: inline-flex; }
-  .nav a[href="/#education"] { display: none; }
   .prose.lead { font-size: 1.5rem; }
   .figure-body { padding: 1.1rem; }
   .figure-bar { flex-wrap: wrap; }
   .celltag--row { flex-wrap: wrap; }
 }
+
+/* Notes retain notebook typography inside a swipeable, snap-aligned strip. */
+.notes-track { position: relative; display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.note-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; padding: 1.4rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); overflow-wrap: anywhere; }
+.note-slide .project-meta { margin: 0; }
+.note-slide h3 { font-size: 1.3rem; line-height: 1.3; margin: .75rem 0 1rem; }
+.note-slide .article-body { margin-top: 0; }
+.notes-controls:not([hidden]) { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; }
+.notes-controls > span { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.notes-buttons { display: flex; gap: .6rem; }
+.notes-buttons button { font: .8rem var(--mono); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; min-height: 44px; padding: .5rem .9rem; cursor: pointer; }
+.notes-buttons button:hover:not(:disabled) { border-color: var(--syn-fn); color: var(--syn-fn); }
+.notes-buttons button:disabled { opacity: .45; cursor: default; }
+
+.notes-track::-webkit-scrollbar { display: none; }
+
+.hero-actions { align-items: center; }
+.hero-socials { display: inline-flex; align-items: center; gap: .5rem; }
+.hero-actions .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; color: var(--muted); border-radius: 6px; }
+.hero-actions .social-icon:hover { color: var(--syn-fn); background: var(--surface); }

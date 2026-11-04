@@ -1,5 +1,4 @@
 ---
-import { getEntry, render } from 'astro:content';
 import type { Role } from '../data/experience';
 
 interface Props {
@@ -7,15 +6,10 @@ interface Props {
   open?: boolean; // default-expanded (used on /resume)
 }
 const { roles, open = false } = Astro.props;
-const entries = await Promise.all(roles.map(async role => {
-  const project = role.projectId ? await getEntry('projects', role.projectId) : undefined;
-  return { role, project, rendered: project ? await render(project) : undefined };
-}));
 ---
 
 <div class="xp">
-  {entries.map(({ role: r, project, rendered }, i) => {
-    const Content = rendered?.Content;
+  {roles.map((r, i) => {
     const expandable = r.points.length > 0 || Boolean(r.tools?.length);
     const Item = expandable ? 'details' : 'div';
     const Heading = expandable ? 'summary' : 'div';
@@ -31,20 +25,12 @@ const entries = await Promise.all(roles.map(async role => {
         {expandable && <span class="xp-toggle mono" aria-hidden="true">+</span>}
       </Heading>
       {expandable && <div class="xp-body">
-        {Content && project ? <>
-          <h3>{project.data.title}</h3>
-          <div class="article-body"><Content /></div>
-          <div class="chips chips--light">
-            {project.data.tools.map(tool => <span class="chip">{tool}</span>)}
-          </div>
-        </> : <>
           <ul class="xp-points">
             {r.points.map(point => <li>{point}</li>)}
           </ul>
           {r.tools && r.tools.length > 0 && <div class="chips chips--light">
             {r.tools.map(tool => <span class="chip">{tool}</span>)}
           </div>}
-        </>}
       </div>}
     </Item>
   ); })}

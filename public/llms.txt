@@ -1,7 +1,6 @@
 # Aishwari Sirur — AI Engineer
 
-> Aishwari Sirur is a Computer Science student at UC Davis (concentrations in
-> Technology Management and Statistics) working at the intersection of AI/ML,
+> Aishwari Sirur is a Computer Science student and Business minor at UC Davis working at the intersection of AI/ML,
 > data science, and product. She builds machine-learning systems and does the
 > data, research, product, and design work around them. She is seeking a
 > **summer 2026 AI engineering internship**.
@@ -19,8 +18,7 @@ detail.
 
 ## Education
 
-- **UC Davis** — B.S. Computer Science; concentrations in Technology Management
-  and Statistics.
+- **UC Davis** — B.S. Computer Science; Minor in Business.
 
 ## Skills
 

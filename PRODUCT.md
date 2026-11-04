@@ -38,7 +38,7 @@ Static personal site (Astro; content collections for projects). Content surfaces
 
 Skills (real): **Data** — Python, Tableau, Scikit-Learn, Statistics. **Product** — Figma, Notion, Qualtrics, User Interviews, Roadmapping. **Design** — UI/UX, Prototyping, Design Systems, Usability Testing, React. Currently learning: LLM fine-tuning, agentic workflows.
 
-Academic: CS major at UC Davis, concentrations in Technology Management and Statistics.
+Academic: Computer Science major and Business minor at UC Davis.
 
 Undecided / pending real values: contact email, LinkedIn URL, GitHub URL, and the resume PDF are placeholders in the build and must be supplied. Do not fabricate them.
 
