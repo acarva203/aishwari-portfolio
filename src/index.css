@@ -106,15 +106,19 @@
   --ring-offset-x: 0px;
   --ring-offset-y: 0px;
   --ring-rotation: 0deg;
+  --ring-scale: 1;
 
   position: absolute;
   inset: 0;
   width: 4096px;
   height: 3200px;
-  transform: translate(var(--ring-offset-x), var(--ring-offset-y))
-    rotate(var(--ring-rotation));
+  translate: var(--ring-offset-x) var(--ring-offset-y);
+  rotate: var(--ring-rotation);
+  scale: var(--ring-scale);
   transform-origin: 2621.424px 1839.543px;
-  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    rotate 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ring-layer-195 {
@@ -145,10 +149,9 @@
 
   opacity: 0;
   filter: blur(12px);
-  transform: translate(var(--ring-offset-x), var(--ring-offset-y))
-    scale(var(--ring-scale)) rotate(var(--ring-rotation));
   transition:
-    transform 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    rotate 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    scale 1600ms cubic-bezier(0.16, 1, 0.3, 1),
     opacity 500ms ease,
     filter 1000ms ease;
 }
@@ -162,9 +165,9 @@
 }
 
 .artwork-origin.emergence .ring-layer img {
-  transform: scaleX(0.35) scaleY(0.16);
+  scale: 0.35 0.16;
   transform-origin: center;
-  transition: transform 1500ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: scale 1500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .artwork-origin.emergence .ring-layer-195,
@@ -198,7 +201,7 @@
 }
 
 .artwork-origin.emergence.rings-emerged .ring-layer img {
-  transform: scaleX(1.28) scaleY(1.14);
+  scale: 1.28 1.14;
 }
 
 .artwork-button:active .artwork-canvas {
