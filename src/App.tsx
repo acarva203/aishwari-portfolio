@@ -10,6 +10,8 @@ function getArtworkScale() {
 export default function App() {
   const [scale, setScale] = useState(getArtworkScale)
   const [isRotated, setIsRotated] = useState(false)
+  const [hasEmerged, setHasEmerged] = useState(false)
+  const [variant, setVariant] = useState<"original" | "emergence">("original")
 
   useEffect(() => {
     const resizeArtwork = () => setScale(getArtworkScale())
@@ -18,13 +20,56 @@ export default function App() {
     return () => window.removeEventListener("resize", resizeArtwork)
   }, [])
 
+  const selectVariant = (nextVariant: "original" | "emergence") => {
+    setVariant(nextVariant)
+    setIsRotated(false)
+    setHasEmerged(false)
+  }
+
+  const handleArtworkClick = () => {
+    if (variant === "emergence") {
+      setHasEmerged(true)
+      return
+    }
+
+    setIsRotated((rotated) => !rotated)
+  }
+
+  const isActive = variant === "emergence" ? hasEmerged : isRotated
+  const artworkStateClass =
+    variant === "emergence"
+      ? ` emergence${hasEmerged ? " rings-emerged" : ""}`
+      : isRotated
+        ? " is-rotated"
+        : ""
+
   return (
     <main className="artwork-stage">
+      <nav aria-label="Artwork variant" className="variant-switch">
+        <button
+          aria-pressed={variant === "original"}
+          onClick={() => selectVariant("original")}
+          type="button"
+        >
+          Original
+        </button>
+        <button
+          aria-pressed={variant === "emergence"}
+          onClick={() => selectVariant("emergence")}
+          type="button"
+        >
+          Emergence
+        </button>
+      </nav>
       <button
-        aria-label="AS kinetic artwork"
-        aria-pressed={isRotated}
+        aria-label={
+          variant === "emergence"
+            ? "Reveal the AS spiral artwork"
+            : "Rotate the AS kinetic artwork"
+        }
+        aria-pressed={isActive}
         className="artwork-button"
-        onClick={() => setIsRotated((rotated) => !rotated)}
+        onClick={handleArtworkClick}
         type="button"
       >
         <span
@@ -32,7 +77,7 @@ export default function App() {
           className="artwork-canvas"
           style={{ transform: `translate(-50%, -50%) scale(${scale})` }}
         >
-          <span className={`artwork-origin${isRotated ? " is-rotated" : ""}`}>
+          <span className={`artwork-origin${artworkStateClass}`}>
             <Group198 />
           </span>
         </span>
