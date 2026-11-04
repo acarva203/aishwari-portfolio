@@ -103,8 +103,6 @@
 }
 
 .ring-layer {
-  --ring-offset-x: 0px;
-  --ring-offset-y: 0px;
   --ring-rotation: 0deg;
   --ring-scale: 1;
 
@@ -112,25 +110,19 @@
   inset: 0;
   width: 4096px;
   height: 3200px;
-  transform: translate(var(--ring-offset-x), var(--ring-offset-y))
-    rotate(var(--ring-rotation)) scale(var(--ring-scale));
+  transform: rotate(var(--ring-rotation)) scale(var(--ring-scale));
   transform-origin: 2621.424px 1839.543px;
   transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.ring-layer-195 {
-  --ring-offset-x: 6.107px;
-  --ring-offset-y: 7.927px;
-}
-
-.ring-layer-196 {
-  --ring-offset-x: 5.966px;
-  --ring-offset-y: 15.543px;
-}
-
-.ring-layer-197 {
-  --ring-offset-x: 4.924px;
-  --ring-offset-y: 24.296px;
+.ring-composite {
+  position: absolute;
+  top: 587px;
+  left: 1369px;
+  display: block;
+  width: 2505.087px;
+  height: 2505.087px;
+  max-width: none;
 }
 
 .artwork-origin.is-rotated .ring-layer-forward {
