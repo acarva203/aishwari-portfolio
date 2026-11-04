@@ -1,5 +1,6 @@
 ---
 import Notebook from '../layouts/Notebook.astro';
+import ASArtwork from '../components/ASArtwork.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { getCollection, render } from 'astro:content';
 import { experience } from '../data/experience';
@@ -28,8 +29,13 @@ const idFor = (cats: string[], n: number) =>
 
 ---
 
-<Notebook>
+<Notebook intro>
   <h1 class="sr-only">Aishwari Sirur — AI Engineer</h1>
+
+  <button class="landing-artwork" type="button" aria-label="Start AS animation">
+    <span class="landing-artwork-image"><ASArtwork variant="emergence" /></span>
+    <span class="intro-hint mono">Click to enter →</span>
+  </button>
 
   {/* In[1] — introduction */}
   <section class="hero-pin-wrap" id="about">
@@ -245,6 +251,63 @@ const idFor = (cats: string[], n: number) =>
     </div>
   </section>
 </Notebook>
+
+<script>
+  const root = document.documentElement;
+  const intro = document.querySelector<HTMLElement>('.landing-artwork');
+  const artwork = intro?.querySelector('.as-emergence');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let finished = false;
+  function finishIntro() {
+    if (finished) return;
+    finished = true;
+    root.classList.remove('intro-active', 'intro-minimizing');
+    const hadFocus = document.activeElement === intro;
+    intro?.remove();
+    if (hadFocus) document.querySelector<HTMLAnchorElement>('.brand-link')?.focus();
+    try { localStorage.setItem('as-intro-dismissed', 'true'); } catch {}
+  }
+  if (root.classList.contains('intro-active') && artwork) {
+    let started = false;
+    const hint = intro?.querySelector('.intro-hint');
+    artwork.classList.add('is-waiting');
+    intro?.addEventListener('click', async () => {
+      if (started) return;
+      started = true;
+      await Promise.all(assets);
+      if (finished) return;
+      artwork.classList.remove('is-waiting');
+      if (!motion.matches) artwork.classList.add('is-playing');
+      if (hint) hint.textContent = '';
+      intro?.setAttribute('aria-label', 'Opening portfolio');
+      window.setTimeout(minimizeIntro, motion.matches ? 0 : 2140);
+    });
+    async function minimizeIntro() {
+      const image = intro?.querySelector<HTMLElement>('.landing-artwork-image');
+      const logo = document.querySelector<HTMLElement>('.brand-artwork');
+      if (!intro || !image || !logo || motion.matches) { finishIntro(); return; }
+      const from = image.getBoundingClientRect();
+      const to = logo.getBoundingClientRect();
+      root.classList.add('intro-minimizing');
+      const travel = image.animate([
+        { transform: 'translate(0, 0) scale(1)' },
+        { transform: `translate(${to.left + to.width / 2 - from.left - from.width / 2}px, ${to.top + to.height / 2 - from.top - from.height / 2}px) scale(${to.width / from.width})` }
+      ], { duration: 800, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' });
+      intro.animate([{ backgroundColor: '#0d0e12' }, { backgroundColor: 'transparent' }],
+        { duration: 650, fill: 'forwards' });
+      await travel.finished;
+      finishIntro();
+    }
+    intro?.focus();
+    // Preload the SVG assets; the first click starts the reveal.
+    const assets = Array.from(artwork.querySelectorAll('image')).map(image => new Promise<void>(resolve => {
+      const preload = new Image();
+      preload.onload = preload.onerror = () => resolve();
+      preload.src = image.getAttribute('href')!;
+    }));
+    motion.addEventListener('change', () => { if (motion.matches) artwork.classList.remove('is-playing'); });
+  } else finishIntro();
+</script>
 
 <script>
   function openProject() {
