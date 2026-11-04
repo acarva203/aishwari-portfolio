@@ -112,13 +112,10 @@
   inset: 0;
   width: 4096px;
   height: 3200px;
-  translate: var(--ring-offset-x) var(--ring-offset-y);
-  rotate: var(--ring-rotation);
-  scale: var(--ring-scale);
+  transform: translate(var(--ring-offset-x), var(--ring-offset-y))
+    rotate(var(--ring-rotation)) scale(var(--ring-scale));
   transform-origin: 2621.424px 1839.543px;
-  transition:
-    rotate 900ms cubic-bezier(0.22, 1, 0.36, 1),
-    scale 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ring-layer-195 {
@@ -150,8 +147,7 @@
   opacity: 0;
   filter: blur(12px);
   transition:
-    rotate 1600ms cubic-bezier(0.16, 1, 0.3, 1),
-    scale 1600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1600ms cubic-bezier(0.16, 1, 0.3, 1),
     opacity 500ms ease,
     filter 1000ms ease;
 }
@@ -164,29 +160,20 @@
   --ring-rotation: 320deg;
 }
 
-.artwork-origin.emergence .ring-layer img {
-  scale: 0.35 0.16;
-  transform-origin: center;
-  transition: scale 1500ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.artwork-origin.emergence .ring-layer-195,
-.artwork-origin.emergence .ring-layer-195 img {
+.artwork-origin.emergence .ring-layer-195 {
   transition-delay: 90ms;
 }
 
-.artwork-origin.emergence .ring-layer-196,
-.artwork-origin.emergence .ring-layer-196 img {
+.artwork-origin.emergence .ring-layer-196 {
   transition-delay: 180ms;
 }
 
-.artwork-origin.emergence .ring-layer-197,
-.artwork-origin.emergence .ring-layer-197 img {
+.artwork-origin.emergence .ring-layer-197 {
   transition-delay: 270ms;
 }
 
 .artwork-origin.emergence.rings-emerged .ring-layer {
-  --ring-scale: 1;
+  --ring-scale: 1.04;
 
   opacity: 1;
   filter: blur(0);
@@ -198,10 +185,6 @@
 
 .artwork-origin.emergence.rings-emerged .ring-layer-reverse {
   --ring-rotation: -80deg;
-}
-
-.artwork-origin.emergence.rings-emerged .ring-layer img {
-  scale: 1.28 1.14;
 }
 
 .artwork-button:active .artwork-canvas {
@@ -216,7 +199,6 @@
 @media (prefers-reduced-motion: reduce) {
   .artwork-canvas,
   .ring-layer,
-  .artwork-origin.emergence .ring-layer img,
   .variant-switch button {
     transition: none;
   }
