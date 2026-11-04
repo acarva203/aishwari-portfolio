@@ -24,12 +24,15 @@
   ===========================================================================
 */
 import '../styles/global.css';
+import ASArtwork from '../components/ASArtwork.astro';
 
 interface Props {
+  intro?: boolean;
   title?: string;
   description?: string;
 }
 const {
+  intro = false,
   title = 'Aishwari Sirur — notebook',
   description = 'Aishwari Sirur — AI engineering intern candidate. CS at UC Davis working across AI, data science, and product. Portfolio rendered as a notebook.',
 } = Astro.props;
@@ -43,6 +46,13 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    {intro && <script is:inline>
+      try {
+        if ((!localStorage.getItem('as-intro-dismissed') || new URLSearchParams(location.search).has('test-intro'))) {
+          document.documentElement.classList.add('intro-active');
+        }
+      } catch (e) {}
+    </script>}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>
       // Set theme before paint — no flash. Saved choice wins; else follow OS.
@@ -77,20 +87,13 @@ const {
     <header class="masthead">
       <div class="masthead-in">
         <div class="brand">
-          <button
-            class="kernel-dot"
-            type="button"
-            aria-label="Restart kernel"
-            title="Restart kernel"
-            data-kernel-restart
-          ></button>
-          <a class="brand-link" href="/">Aishwari&nbsp;Sirur</a>
-          <span class="kernel-label" data-kernel-label>● notebook — kernel ready</span>
+          <a class="brand-link" href="/" aria-label="Aishwari Sirur — home"><span class="brand-artwork"><ASArtwork /></span></a>
         </div>
-        <nav class="nav" aria-label="Sections">
-          <a class="hide-sm" href="/#projects">projects</a>
-          <a class="hide-sm" href="/#experience">experience</a>
+        <button class="mobile-menu-toggle mono" type="button" aria-expanded="false" aria-controls="section-nav" hidden>Menu</button>
+        <nav class="nav" id="section-nav" aria-label="Sections">
+          <a href="/#experience">experience</a>
           <a class="cta" href="/#education">education</a>
+          <a href="/#log">explorations</a>
           <a class="cta kw" href="/#contact">contact →</a>
           <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
             <span class="glyph" aria-hidden="true">◐</span> <span data-theme-label>dark</span>
@@ -98,6 +101,31 @@ const {
         </nav>
       </div>
     </header>
+
+    <script>
+      const menuToggle = document.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
+      const sectionNav = document.querySelector<HTMLElement>('#section-nav');
+      const mobileMenu = matchMedia('(max-width: 560px)');
+      if (menuToggle && sectionNav) {
+        menuToggle.hidden = false;
+        function setMenu(open: boolean) {
+          menuToggle!.setAttribute('aria-expanded', String(open));
+          menuToggle!.textContent = open ? 'Close menu' : 'Menu';
+          sectionNav!.classList.toggle('is-open', open);
+        }
+        menuToggle.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
+        sectionNav.addEventListener('click', event => {
+          if ((event.target as HTMLElement).closest('a') && mobileMenu.matches) setMenu(false);
+        });
+        document.addEventListener('keydown', event => {
+          if (event.key === 'Escape' && mobileMenu.matches && menuToggle.getAttribute('aria-expanded') === 'true') {
+            setMenu(false);
+            menuToggle.focus();
+          }
+        });
+        mobileMenu.addEventListener('change', () => setMenu(false));
+      }
+    </script>
 
     <main class="wrap" id="main">
       <slot />
@@ -154,7 +182,7 @@ const {
 
         // 2) Type a command anywhere to run a hidden REPL cell.
         var COMMANDS = {
-          whoami: 'aishwari sirur — ai engineer · cs @ uc davis · ai, data, and product',
+          whoami: 'aishwari sirur — ai engineer · cs & business @ uc davis · ai, data, and product',
           ls: 'projects · experience · education · contact',
           help: "commands: whoami · ls · sudo hire · help  (esc to dismiss)",
           'sudo hire': ['permission granted → ', 'get in touch', '/#contact'],

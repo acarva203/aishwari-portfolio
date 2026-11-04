@@ -7,7 +7,7 @@ export interface SkillGroup {
 export const skills: SkillGroup[] = [
   {
     group: 'AI / ML & Data',
-    items: ['Python', 'Scikit-Learn', 'Machine Learning', 'Statistics', 'Geospatial Data', 'Tableau', 'LLM fine-tuning', 'Agentic workflows'],
+    items: ['Python', 'Scikit-Learn', 'Machine Learning', 'R', 'ADK', 'Gemini Enterprise', 'Agentic workflows'],
   },
   {
     group: 'Product',
@@ -21,6 +21,6 @@ export const skills: SkillGroup[] = [
 
 // Flat list for the homepage showcase (order = rough priority).
 export const stack: string[] = [
-  'Python', 'Scikit-Learn', 'Machine Learning', 'LLM fine-tuning', 'Agentic workflows',
-  'Statistics', 'Tableau', 'React', 'Figma', 'Qualtrics', 'Notion', 'UI/UX',
+  'Python', 'Scikit-Learn', 'Machine Learning', 'ADK', 'Gemini Enterprise', 'Agentic workflows',
+  'R', 'React', 'Figma', 'Qualtrics', 'Notion', 'UI/UX',
 ];

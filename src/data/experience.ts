@@ -19,8 +19,8 @@ export const experience: Role[] = [
     highlight: true,
     tools: ['Gemini Enterprise', 'AI Agents', 'Technical Documentation'],
     points: [
-      'Creating custom technical documentation to support the rollout of Claude, Gemini, and ChatGPT accounts across the Stanford community.',
-      'Built a custom AI agent in Gemini Enterprise to automatically match researcher and college eligibility for grants, saving over 10 hours per month.',
+      'Assisting in AI account (Claude, Gemini, ChatGPT) rollout to entire Stanford community by creating custom technical documentation',
+      'Built a custom AI agent in Gemini Enterprise that will automatically match researcher and college eligibility for grants saving over 10 hours/month',
     ],
   },
   {
@@ -31,8 +31,8 @@ export const experience: Role[] = [
     highlight: true,
     tools: ['Qualtrics', 'Calendly', 'User Interviews'],
     points: [
-      'Conducting customer research interviews and distributing research surveys.',
-      'Built a workflow automating interview scheduling with Qualtrics and Calendly.',
+      'Design and distribute customer research surveys in Qualtrics and conduct in-depth user interviews to surface actionable insights, shaping product direction and messaging.',
+      'Built an automated interview scheduling workflow that integrates Qualtrics and Calendly, reducing manual coordination overhead by 2+ hours/week',
     ],
   },
   {
@@ -44,8 +44,9 @@ export const experience: Role[] = [
     highlight: true,
     tools: ['Python', 'Qualtrics', 'Qualitative Analysis'],
     points: [
-      'Processed and cleaned survey data from 500+ college students to measure AI attitude shifts.',
-      'Transcribed and analyzed qualitative interviews assessing AI tools’ impact on student writing.',
+      'Processed and cleaned survey data from 500+ college students to measure AI attitude shifts before and after English course completion, revealing perception changes driven by specialized AI interventions.',
+      'Transcribed and analyzed 20+ qualitative interviews to assess how AI tools impacted student writing ability and course performance, quantifying impact on academic outcomes.',
+      'Presented research poster at Undergraduate Research Conference on correlation between AI usage and AI literacy by analyzing pre- and post-intervention survey in R',
     ],
   },
 ];
