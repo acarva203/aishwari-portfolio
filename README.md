@@ -1,62 +1,81 @@
-# Aishwari Sirur — portfolio
+# Aishwari Sirur — Portfolio
 
-A personal portfolio for an **AI engineer**, rendered as one **computational
-notebook** — cells, `In[]`/`Out[]` prompts, output figures, and a
-syntax-highlight color system. Built with [Astro](https://astro.build): static,
-zero-JS-by-default, light/dark themes.
+A personal AI engineering portfolio built with Astro and TypeScript. The site uses a computational notebook style, with numbered cells, syntax colors, light and dark themes, and an animated AS identity.
 
-- Product truth: [`PRODUCT.md`](./PRODUCT.md)
-- Visual world / design system: [`DESIGN.md`](./DESIGN.md)
+## Local development
 
-## Develop
+Use Node.js 22 LTS or newer. The project's Astro dependency requires at least Node.js 18.20.8; Node.js 16 will not run it.
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # -> dist/
-npm run preview  # serve the build locally
+npm run dev
 ```
 
-## One-page structure
+Open `http://localhost:4321` (or the URL printed by Astro).
 
-All portfolio content lives at `/`: introduction, featured work, expandable case studies, skills, experience, education, notes, and contact. Navigation uses section anchors. Previous page URLs redirect to the corresponding homepage section, including individual project links.
+```bash
+npm run build    # Generate the static site in dist/
+npm run preview  # Preview the production build locally
+```
 
-## Content & data
+## Intro and navigation
 
-Markdown collections (add an entry = drop in a new `.md` file):
+On a first visit, a full-screen AS logo appears. One click (or Enter/Space while focused) starts the Emergence animation. The artwork then shrinks into the header logo as the portfolio appears. Reduced-motion users enter without the animated transition.
 
-- `src/content/projects/*.md` — `title, blurb, categories[], metricValue, metricLabel, timeline, team, tools[], href?, featured, order`
-- `src/content/updates/*.md` — `date, title, tag (building|learning|reading|shipping|thinking)` + markdown body
+Dismissal is remembered in the browser's local storage under `as-intro-dismissed`, so subsequent visits skip the intro. To replay it during development, open:
 
-Typed data files (edit the array):
+```text
+http://localhost:4321/?test-intro
+```
 
-- `src/data/experience.ts` — roles; `highlight: true` surfaces a role on the homepage
-- `src/data/goals.ts` — grouped goals with `progress` (0–100) → the `/log` progress bars
+Refresh that URL to test again. The header uses the Original artwork; both variants share SVG assets imported from the `figma-make-artwork` branch. On screens up to 560px wide, a Menu button toggles vertically stacked navigation links. Selecting a link or pressing Escape closes the menu.
 
-## Contact form (Web3Forms)
+## Page structure
 
-The `/contact` form posts to [Web3Forms](https://web3forms.com) (free, no backend).
-Get an access key (enter your email on their site), then either:
+The homepage contains the introduction, skills, experience, education, exploration notes, and contact form. Featured work, the project index, and standalone case studies are currently retained in the source but hidden. Experience entries can show linked project details.
 
-- set `PUBLIC_WEB3FORMS_KEY` in a `.env` file or your Vercel env vars, **or**
-- replace `YOUR_WEB3FORMS_ACCESS_KEY` in `src/pages/contact.astro`.
+Navigation uses homepage anchors. Legacy routes redirect to the relevant homepage sections; `/resume` currently redirects to education. The PDF at `public/resume.pdf` is a placeholder.
 
-Until a real key is set, the form renders but submissions return an error.
+## Where to edit
 
-## Before publishing — replace these placeholders
+| File or directory | Purpose |
+| --- | --- |
+| `src/pages/index.astro` | Homepage content, sections, intro interaction, and notes carousel |
+| `src/layouts/Notebook.astro` | Shared page shell, header, mobile menu, themes, and metadata |
+| `src/components/ASArtwork.astro` | Original logo and Emergence animation |
+| `public/assets/rings/` | Shared AS artwork SVG assets |
+| `src/styles/global.css` | Site styles and responsive layouts |
+| `src/data/experience.ts` | Experience entries and associated project IDs |
+| `src/components/ExperienceList.astro` | Expandable experience entries |
+| `src/data/skills.ts` | Skills grouped by discipline |
+| `src/content/projects/` | Project Markdown and frontmatter |
+| `src/content/updates/` | Exploration notes, ordered by date |
+| `src/content.config.ts` | Required fields and defaults for Markdown collections |
+| `src/components/ContactForm.astro` | Contact fields, validation, and submission |
 
-- **Web3Forms key** (above)
-- **Contact links** — email, LinkedIn, GitHub in `src/pages/contact.astro`, `src/pages/index.astro`
-- **Resume PDF** — `public/resume.pdf` (currently a placeholder)
-- **Domain** — `site:` in `astro.config.mjs`, and the URLs in `public/llms.txt` / `public/robots.txt`
+Add projects or exploration notes by creating a Markdown file in the appropriate collection. Copy an existing entry and follow the schema in `src/content.config.ts`. `src/data/goals.ts` is retained but is not used by the current homepage.
 
-## Deploy to Vercel
+For product and design context, see [PRODUCT.md](./PRODUCT.md) and [DESIGN.md](./DESIGN.md).
 
-Vercel auto-detects Astro (build `astro build`, output `dist/`) — no config needed.
-Import the repo at [vercel.com/new](https://vercel.com/new); every push to `main`
-auto-deploys. Set the real domain in `astro.config.mjs` first.
+## Contact form
 
-## Machine-readable
+The homepage form submits directly to Web3Forms without a backend. Set your own access key in a local `.env` file or the deployment environment:
 
-- `public/llms.txt` — a structured candidate summary for LLMs / AI agents
-- `public/robots.txt` — welcomes crawlers, points to `llms.txt`
+```dotenv
+PUBLIC_WEB3FORMS_KEY=your_web3forms_access_key
+```
+
+The component currently includes a fallback key. The `PUBLIC_` prefix means the value is included in the client-side site; it is not a server secret. Verify delivery to the intended inbox before publishing.
+
+## Deployment
+
+This is a static Astro site. Configure the hosting service with:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Node.js: 22 LTS or newer
+- Environment variable: `PUBLIC_WEB3FORMS_KEY`
+
+For Vercel, import the repository and select the branch that should deploy. Current portfolio development is on `codex/portfolio`; pushing to another branch only updates production if the hosting project is configured to deploy it.
+
+Before publishing, verify the contact destination and social links, replace `public/resume.pdf` if it will be linked, and confirm the site URL in `astro.config.mjs`. Keep URLs and content in `public/robots.txt` and `public/llms.txt` consistent with the published site.
