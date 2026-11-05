@@ -1,28 +1,5 @@
 ---
-/*
-  ============================ DIRECTION CONTRACT ============================
-  THESIS: This portfolio is one executable notebook. Prose, code, and rendered
-    output interleave so software + research + side projects read as a single
-    line of reasoning. Refuses the dev-portfolio hero-and-grid and the
-    clean-minimal whitespace template.
-  OWN-WORLD: Cool technical paper ground (#F6F7F9, faint engineering grid) with
-    white cells and contrasting dark "output" blocks (#16181D). JetBrains Mono
-    carries all notebook chrome — In[n]:/Out[n]: prompts (fuchsia), Fig.N
-    counters, nav, metadata, entry IDs. Hanken Grotesk for reading prose.
-    Disciplined syntax palette: fuchsia prompt, emerald string, amber output,
-    blue link. Recognizable with content removed by the prompt gutter +
-    numbered cells + dark output figures.
-  STORY: A recruiter/peer reads In[1] (who Aishwari is, the range), sees Fig.1
-    the featured work rendered as live output, scrolls numbered cells
-    (projects, research, writing) each demonstrating real artifacts, and reaches
-    the Out cell with resume + contact — leaving with the coherence and a step.
-  FIRST VIEWPORT: Mono masthead ("Aishwari Sirur ● notebook — kernel ready" +
-    nav/resume/contact). Then In[1]: whoami() statement in prose, and Fig.1 the
-    featured project as a dark output figure with an authored data panel.
-  FORM: Computational notebook — #1 of the derived list; committed. Chosen via
-    the structured-question channel (no networked roll / decision page).
-  ===========================================================================
-*/
+// Single-page notebook shell: artwork, section navigation, and footer.
 import '../styles/global.css';
 import ASArtwork from '../components/ASArtwork.astro';
 import Analytics from '@vercel/analytics/astro';
@@ -82,10 +59,10 @@ const {
         </div>
         <button class="mobile-menu-toggle mono" type="button" aria-expanded="false" aria-controls="section-nav" hidden>Menu</button>
         <nav class="nav" id="section-nav" aria-label="Sections">
-          <a href="/#experience">experience</a>
-          <a class="cta" href="/#education">education</a>
-          <a href="/#log">explorations</a>
-          <a class="cta kw" href="/#contact">contact →</a>
+          <a href="#experience">experience</a>
+          <a class="cta" href="#education">education</a>
+          <a href="#log">explorations</a>
+          <a class="cta kw" href="#contact">contact →</a>
         </nav>
       </div>
     </header>
@@ -153,99 +130,6 @@ const {
       </footer>
     </main>
 
-    <script is:inline>
-      // Easter eggs — two, both leaning into the notebook-as-REPL fiction.
-      (function () {
-        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // 1) Click the "kernel ready" dot to restart the kernel.
-        var dot = document.querySelector('[data-kernel-restart]');
-        var label = document.querySelector('[data-kernel-label]');
-        var restarting = false;
-        if (dot) {
-          dot.addEventListener('click', function () {
-            if (restarting) return;
-            restarting = true;
-            dot.classList.add('restarting');
-            if (label) label.textContent = '● restarting kernel…';
-            window.setTimeout(function () {
-              dot.classList.remove('restarting');
-              if (label) label.textContent = '● notebook — kernel ready';
-              restarting = false;
-            }, reduce ? 500 : 1400);
-          });
-        }
-
-        // 2) Type a command anywhere to run a hidden REPL cell.
-        var COMMANDS = {
-          whoami: 'aishwari sirur — ai engineer · cs & business @ uc davis · ai, data, and product',
-          ls: 'projects · experience · education · contact',
-          help: "commands: whoami · ls · sudo hire · help  (esc to dismiss)",
-          'sudo hire': ['permission granted → ', 'get in touch', '/#contact'],
-        };
-        var buf = '';
-        var clearTimer = null;
-        var toast = null;
-        var hideTimer = null;
-
-        function ensureToast() {
-          if (toast) return toast;
-          toast = document.createElement('div');
-          toast.className = 'repl-toast';
-          toast.setAttribute('role', 'status');
-          toast.setAttribute('aria-live', 'polite');
-          document.body.appendChild(toast);
-          return toast;
-        }
-
-        function run(cmd) {
-          var out = COMMANDS[cmd];
-          var t = ensureToast();
-          var outHtml;
-          if (Array.isArray(out)) {
-            outHtml = out[0] + '<a href="' + out[2] + '">' + out[1] + '</a>';
-          } else {
-            outHtml = out;
-          }
-          t.innerHTML =
-            '<div class="repl-in">&gt;&gt;&gt; <b>' + cmd + '</b></div>' +
-            '<div class="repl-out">' + outHtml + '</div>';
-          // reflow so the transition runs even on rapid re-trigger
-          void t.offsetWidth;
-          t.classList.add('show');
-          if (hideTimer) window.clearTimeout(hideTimer);
-          hideTimer = window.setTimeout(hide, 5000);
-        }
-
-        function hide() {
-          if (toast) toast.classList.remove('show');
-        }
-
-        function typingInField(el) {
-          if (!el) return false;
-          var tag = el.tagName;
-          return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
-        }
-
-        document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') { hide(); buf = ''; return; }
-          if (typingInField(e.target)) return;
-          if (e.metaKey || e.ctrlKey || e.altKey) return;
-          if (e.key && e.key.length === 1 && /[a-z ]/i.test(e.key)) {
-            buf = (buf + e.key.toLowerCase()).slice(-24);
-            if (clearTimer) window.clearTimeout(clearTimer);
-            clearTimer = window.setTimeout(function () { buf = ''; }, 2000);
-            for (var cmd in COMMANDS) {
-              if (COMMANDS.hasOwnProperty(cmd) && buf.slice(-cmd.length) === cmd) {
-                run(cmd);
-                buf = '';
-                break;
-              }
-            }
-          }
-        });
-      })();
-    </script>
     <script>
       // Native notebook motion: cells "execute" (reveal) as they scroll in,
       // orchestrated once. Respects reduced-motion via CSS; here we just add the

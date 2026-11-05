@@ -3,9 +3,8 @@ import type { Role } from '../data/experience';
 
 interface Props {
   roles: Role[];
-  open?: boolean; // default-expanded (used on /resume)
 }
-const { roles, open = false } = Astro.props;
+const { roles } = Astro.props;
 ---
 
 <div class="xp">
@@ -14,7 +13,7 @@ const { roles, open = false } = Astro.props;
     const Item = expandable ? 'details' : 'div';
     const Heading = expandable ? 'summary' : 'div';
     return (
-    <Item id={r.projectId ? `project-${r.projectId}` : undefined} class="xp-item" open={expandable ? open : undefined}>
+    <Item id={r.projectId ? `project-${r.projectId}` : undefined} class="xp-item">
       <Heading class="xp-summary" style={!expandable ? "cursor:default" : undefined}>
         <span class="xp-num mono">{String(i + 1).padStart(2, '0')}</span>
         <span class="xp-head">

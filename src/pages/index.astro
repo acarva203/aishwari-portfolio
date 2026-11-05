@@ -7,25 +7,8 @@ import { experience } from '../data/experience';
 import ExperienceList from '../components/ExperienceList.astro';
 import { skills } from '../data/skills';
 
-const experienceProjectIds = new Set(experience.map(role => role.projectId).filter(Boolean));
-const projects = (await getCollection('projects')).filter(project => !experienceProjectIds.has(project.id)).sort(
-  (a, b) => a.data.order - b.data.order
-);
 const updates = (await getCollection('updates')).sort((a, b) => b.data.date.localeCompare(a.data.date));
 const updateDetails = await Promise.all(updates.map(async (update) => ({ update, ...(await render(update)) })));
-const projectDetails = await Promise.all(projects.map(async (project) => ({ project, ...(await render(project)) })));
-const featured = projects.find((p) => p.data.featured) ?? projects[0];
-const restProjects = projects.filter((p) => p.id !== featured?.id);
-
-const catCode: Record<string, string> = {
-  'AI / ML': 'AI',
-  'Data Science': 'DS',
-  Product: 'PM',
-  Design: 'DES',
-  Engineering: 'ENG',
-};
-const idFor = (cats: string[], n: number) =>
-  `${catCode[cats[0]] ?? 'SR'}·${String(n).padStart(3, '0')}`;
 
 ---
 
@@ -74,114 +57,12 @@ const idFor = (cats: string[], n: number) =>
    </div>
   </section>
 
-  {/* Fig.1 — featured, rendered as output */}
-  {featured && (
-    <section class="cell" id="featured" hidden style="display: none">
-      <div class="cell-gutter">Out[<span class="out">1</span>]:</div>
-      <div class="cell-body">
-        <div class="celltag mono"><span class="fn">render</span>(featured) — Fig.1</div>
-        <div class="figure">
-          <div class="figure-bar">
-            <span class="dots" aria-hidden="true">
-              <span class="dot" style="background:#ff5f56"></span>
-              <span class="dot" style="background:#ffbd2e"></span>
-              <span class="dot" style="background:#27c93f"></span>
-            </span>
-            <span>featured · {featured.data.categories.join(' · ')}</span>
-            <span class="caption">Fig.1</span>
-          </div>
-          <div class="figure-body">
-            <h2 class="figure-title">{featured.data.title}</h2>
-            <p class="figure-stat"><span class="num">{featured.data.metricValue}</span> {featured.data.metricLabel}</p>
-            <p class="figure-blurb">{featured.data.blurb}</p>
-
-            {/* authored output panel — a real summary readout, not a gradient */}
-            <div class="summary" aria-hidden="true">
-              <div><span class="prompt">In[*]:</span> project.summary()</div>
-              <dl>
-                <div><dt>metric</dt><dd><span class="num">{featured.data.metricValue}</span> — {featured.data.metricLabel}</dd></div>
-                <div><dt>timeline</dt><dd>{featured.data.timeline} · {featured.data.team}</dd></div>
-                <div><dt>stack</dt><dd>{featured.data.tools.join(' · ')}</dd></div>
-              </dl>
-            </div>
-
-            <div class="chips">
-              {featured.data.tools.map((s) => <span class="chip">{s}</span>)}
-            </div>
-
-            <div class="figure-actions">
-              <a href={`#project-${featured.id}`}>read case study <span class="arr">→</span></a>
-              {featured.data.href && (
-                <a href={featured.data.href} rel="noopener">live <span class="arr">↗</span></a>
-              )}
-              {featured.data.repo && (
-                <a href={featured.data.repo} rel="noopener">code <span class="arr">↗</span></a>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )}
-
-  {/* In[2] — projects */}
-  {restProjects.length > 0 && (
-    <section class="cell" id="projects" hidden style="display: none">
-      <div class="cell-gutter" aria-hidden="true" style="visibility: hidden">In[<span>2</span>]:</div>
-      <div class="cell-body">
-        <div class="celltag celltag--row mono"><span><span class="fn">projects</span>.list(<span class="com">exclude=featured</span>)</span><span class="viewall">{projects.length} projects</span></div>
-        <div class="entries">
-          {restProjects.map((p, i) => (
-            <a class="entry" href={`#project-${p.id}`}>
-              <span class="entry-id">{idFor(p.data.categories, i + 2)}</span>
-              <span class="entry-main">
-                <span class="entry-title">
-                  {p.data.title}{' '}
-                  {p.data.href && <span class="arr">↗</span>}
-                </span>
-                <span class="entry-blurb">{p.data.blurb}</span>
-                {p.data.tools.length > 0 && (
-                  <span class="entry-tools mono">{p.data.tools.slice(0, 4).join(' · ')}</span>
-                )}
-              </span>
-              <span class="entry-meta">{p.data.categories.join(' · ')}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  {/* Temporarily hidden; retain case studies here for future use. */}
-  <section class="cell" id="case-studies" hidden style="display: none">
-    <div class="cell-gutter">Out[<span class="out">2</span>]:</div>
-    <div class="cell-body">
-      <h2 class="section-title">Behind the work</h2>
-      <div class="project-details">
-        {projectDetails.map(({ project: p, Content }) => (
-          <details class="project-detail" id={`project-${p.id}`}>
-            <summary><span>{p.data.title}</span><span class="detail-toggle" aria-hidden="true">+</span></summary>
-            <div class="project-content">
-              <p class="project-meta mono">{p.data.timeline} · {p.data.team}</p>
-              <div class="article-body"><Content /></div>
-              <div class="chips chips--light">{p.data.tools.map(tool => <span class="chip">{tool}</span>)}</div>
-              {(p.data.href || p.data.repo) && <p class="project-links mono">
-                {p.data.href && <a href={p.data.href}>Visit project ↗</a>}
-                {p.data.repo && <a href={p.data.repo}>View code ↗</a>}
-              </p>}
-            </div>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
-
   {/* In[2] — tech-stack showcase */}
   <section class="cell" id="stack">
     <div class="cell-gutter">In[<span>2</span>]:</div>
     <div class="cell-body">
       <div class="celltag mono"><span class="fn">stack</span>  <span class="com"># tools I reach for</span></div>
-      {skills.map(({ group, items }) => <div class="skillgroup" hidden={group === 'Design & Front-end'}>
+      {skills.map(({ group, items }) => <div class="skillgroup">
         <h3 class="glabel">{group}</h3>
         <div class="chips chips--light stack-chips">
           {items.map(item => <span class="chip">{item}</span>)}
@@ -191,7 +72,7 @@ const idFor = (cats: string[], n: number) =>
   </section>
 
   {/* In[3] — full experience, expandable inline */}
-  {experience.some((r) => r.highlight) && (
+  {experience.length > 0 && (
     <section class="cell" id="experience">
       <div class="cell-gutter">In[<span>3</span>]:</div>
       <div class="cell-body">

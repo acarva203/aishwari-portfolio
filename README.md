@@ -32,9 +32,11 @@ Refresh that URL to test again. The header uses the Original artwork; both varia
 
 ## Page structure
 
-The homepage contains the introduction, skills, experience, education, exploration notes, and contact form. Featured work, the project index, and standalone case studies are currently retained in the source but hidden. Experience entries can show linked project details.
+The site has one route: `/`, rendered by `src/pages/index.astro`. It contains the introduction, skills, expandable experience entries, education, exploration notes, and contact form.
 
-Navigation uses homepage anchors. Legacy routes redirect to the relevant homepage sections; `/resume` currently redirects to education. The PDF at `public/resume.pdf` is a placeholder.
+Navigation uses section anchors: `#experience`, `#education`, `#log`, and `#contact`. The former `/projects`, `/project/*`, `/resume`, `/log`, and `/contact` routes have been removed; use homepage anchors for links and bookmarks.
+
+Hidden featured work, project listings and case studies, the hidden Design & Front-end skill group, unused goals, keyboard easter eggs, and the placeholder résumé PDF have been removed. Expandable experience details, the source peek, the notes carousel, and accessibility/form support remain part of the active page.
 
 ## Where to edit
 
@@ -48,12 +50,11 @@ Navigation uses homepage anchors. Legacy routes redirect to the relevant homepag
 | `src/data/experience.ts` | Experience entries and associated project IDs |
 | `src/components/ExperienceList.astro` | Expandable experience entries |
 | `src/data/skills.ts` | Skills grouped by discipline |
-| `src/content/projects/` | Project Markdown and frontmatter |
 | `src/content/updates/` | Exploration notes, ordered by date |
 | `src/content.config.ts` | Required fields and defaults for Markdown collections |
 | `src/components/ContactForm.astro` | Contact fields, validation, and submission |
 
-Add projects or exploration notes by creating a Markdown file in the appropriate collection. Copy an existing entry and follow the schema in `src/content.config.ts`. `src/data/goals.ts` is retained but is not used by the current homepage.
+Add exploration notes by creating a Markdown file in `src/content/updates/`. Copy an existing entry and follow the schema in `src/content.config.ts`. Update experience and skills in `src/data/`; reusable UI stays in `src/components/` and the document shell stays in `src/layouts/`.
 
 For product and design context, see [PRODUCT.md](./PRODUCT.md) and [DESIGN.md](./DESIGN.md).
 
@@ -78,7 +79,7 @@ This is a static Astro site. Configure the hosting service with:
 
 For Vercel, import the repository and select the branch that should deploy. Current portfolio development is on `codex/portfolio`; pushing to another branch only updates production if the hosting project is configured to deploy it.
 
-Before publishing, verify the contact destination and social links, replace `public/resume.pdf` if it will be linked, and confirm the site URL in `astro.config.mjs`. Keep URLs and content in `public/robots.txt` and `public/llms.txt` consistent with the published site.
+Before publishing, verify the contact destination and social links, and confirm the site URL in `astro.config.mjs`. Keep URLs and content in `public/robots.txt` and `public/llms.txt` consistent with the published site.
 
 ## Vercel Analytics
 

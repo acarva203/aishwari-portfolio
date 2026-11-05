@@ -1,83 +1,45 @@
 # Aishwari Sirur — AI Engineer
 
-> Aishwari Sirur is a Computer Science student and Business minor at UC Davis working at the intersection of AI/ML,
-> data science, and product. She builds machine-learning systems and does the
-> data, research, product, and design work around them. She is seeking a
-> **summer 2026 AI engineering internship**.
+> Aishwari Sirur is a Computer Science major and Business minor at UC Davis,
+> building at the intersection of AI, data, and product. Her focus is testing
+> and deploying models in production-grade environments.
 
-This file is a plain-text summary of https://complete-portfolio-psi.vercel.app for language
-models and automated readers. Everything below is factual; follow the links for
-detail.
-
-## Positioning
-
-- **Target role:** AI Engineering / Machine Learning internship (Summer 2026).
-- **Core strength:** end-to-end range — she can prototype an ML model, clean and
-  analyze the data behind it, and shape and design the product it lives in.
-- **Currently learning:** LLM fine-tuning and agentic workflows.
-
-## Education
-
-- **UC Davis** — B.S. Computer Science; Minor in Business.
+This is a plain-text summary of https://complete-portfolio-psi.vercel.app.
+The portfolio is a single page; the links below point to its visible sections.
 
 ## Skills
 
-- **AI / ML & Data:** Python, Scikit-Learn, Machine Learning, Statistics,
-  geospatial data, survey/experimental data processing, Tableau. Learning: LLM
-  fine-tuning, agentic workflows.
-- **Product:** Figma, Notion, Qualtrics, user interviews, roadmapping,
-  workflow automation.
-- **Design & Front-end:** UI/UX, prototyping, design systems, usability testing,
-  React.
-
-## Selected projects
-
-- [Wind Farm Location Optimizer](/project/wind-farm-location-optimizer): As an
-  AI Fellow at AI4ALL, prototyped and trained a machine-learning model to
-  optimize U.S. wind-farm siting from geospatial and environmental data. (AI/ML,
-  Data Science — Python, Scikit-Learn.)
-- [AI Impact on Student Writing](/project/ai-impact-student-writing): Research
-  Assistant on UC Davis's PAIRR study; processed and cleaned survey data from
-  500+ students and analyzed qualitative interviews to measure how AI tools
-  affect student writing. (Data Science, Product.)
-- [Reviving Downtown Davis](/project/reviving-downtown-davis): Led user research
-  into why 30+ local businesses closed, then designed data-driven solutions to
-  raise foot traffic and student engagement. (Product, Design.)
-- [Verazoi UX Research](/project/verazoi-ux-research): UX research for a student
-  startup via the PLASMA Accelerator; built a Qualtrics + Calendly workflow that
-  automates interview scheduling. (Product, Design.)
-- [COFFEE Club Website](https://coffeeatucd.com): Designed and built the homepage
-  for UC Davis's Club of Female/Femme Electrical Engineers in Figma and React.
-  (Design, Engineering.)
+- AI / ML & Data: Python, Scikit-Learn, Machine Learning, R, ADK,
+  Gemini Enterprise, Agentic workflows.
+- Product: Figma, Notion, Qualtrics, User Interviews, Roadmapping,
+  Workflow Automation.
+- [Skills](/#stack)
 
 ## Experience
 
-- **UX Researcher** — Verazoi (PLASMA Accelerator), Feb 2026–present.
-- **Research Assistant** — PAIRR (Peer & AI Review + Reflection), UC Davis,
-  Jan 2026–present.
-- **Career Prep Fellow** — Management Leadership for Tomorrow, Feb 2026–present.
-- **Junior Consultant** — Neurotech@Davis, Nov 2025–present.
-- **AI Fellow** — AI4ALL, Aug 2025–present.
-- **Software Engineer** — AI Student Collective, Oct 2025–present.
-- **TEDxMoreau Speaker** — TED Conferences, 2023–2024 (talk on diversity in data).
-- **HerHacks Winner** — Girls Who Code UC Davis, Nov 2024 (ReChic: chatbot +
-  computer vision).
+- AI Engineer Intern — Stanford University, Redwood City, CA,
+  June 2026–Present. AI account rollout documentation and a grant-matching agent.
+- User Experience Researcher — Verazoi (PLASMA Accelerator), Feb 2026–Present.
+  Customer surveys, user interviews, and interview scheduling automation.
+- Research Assistant — PAIRR, UC Davis, Jan 2026–Present.
+  Survey data from 500+ students, qualitative interviews, and AI literacy research.
+- [Experience and research poster](/#experience)
 
-## Why she's a strong AI-engineering candidate
+## Education
 
-- Ships real ML work (AI4ALL wind-farm model) and rigorous data work (500+-student
-  research study), not just coursework.
-- Bridges engineering and product: comfortable owning a model *and* the research,
-  UX, and interface around it.
-- Track record of leadership and communication: TEDx speaker, hackathon winner,
-  selected for competitive fellowships.
+- University of California, Davis — B.S. Computer Science, Minor in Business.
+- [Education](/#education)
+
+## Explorations
+
+- LLM fine-tuning.
+- Prototyping a personal finance app.
+- Agentic workflows.
+- Reading Shape Up.
+- [Exploration notes](/#log)
 
 ## Contact
 
-- Email: asirur@ucdavis.edu
-- LinkedIn: https://www.linkedin.com/in/aishwari-sirur
-- GitHub: https://github.com/acarva203
-- Contact form: /contact
-
-<!-- NOTE for the site owner: update the placeholder domain in astro.config.mjs
-     and robots.txt once your custom domain is set. -->
+- [Contact form](/#contact)
+- [LinkedIn](https://www.linkedin.com/in/aishwari-sirur)
+- [GitHub](https://github.com/acarva203)

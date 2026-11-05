@@ -34,7 +34,7 @@ Reached on the open web, often via a resume link, application, referral, or soci
 
 ## Capabilities and Constraints
 
-Static personal site (Astro; content collections for projects). Content surfaces: a statement/hero, a featured project, a projects list, an experience timeline, and contact.
+Static single-page personal site (Astro; content collection for exploration notes). Active surfaces: introduction, skills, expandable experience, education, exploration notes, and contact. Hidden project sections and legacy page routes have been removed.
 
 Skills (real): **Data** — Python, Tableau, Scikit-Learn, Statistics. **Product** — Figma, Notion, Qualtrics, User Interviews, Roadmapping. **Design** — UI/UX, Prototyping, Design Systems, Usability Testing, React. Currently learning: LLM fine-tuning, agentic workflows.
 

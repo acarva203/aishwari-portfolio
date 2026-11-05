@@ -47,7 +47,7 @@ Both chosen against the skill's overused-face list and against the AI cream-seri
 
 ## Topology
 
-Single page: introduction → featured project → project index and expandable case studies → skills → full experience → education → notes → contact form. Section anchors keep exploration on the homepage. Legacy routes redirect to the relevant section.
+Single page: introduction → skills → expandable experience → education → exploration notes → contact form. Section anchors keep navigation on the homepage. Hidden project sections and legacy routes have been removed.
 
 ## States
 

@@ -7,7 +7,6 @@ export interface Role {
   points: string[];
   poster?: { src: string; title: string; alt: string };
   tools?: string[]; // shown as chips when the role is expanded
-  highlight?: boolean; // surfaced in the shortened homepage list
 }
 
 // Real experience, most recent first.
@@ -17,7 +16,6 @@ export const experience: Role[] = [
     org: 'Stanford University',
     location: 'Redwood City, CA',
     period: 'June 2026 – Present',
-    highlight: true,
     tools: ['Gemini Enterprise', 'AI Agents', 'Technical Documentation'],
     points: [
       'Assisting in AI account (Claude, Gemini, ChatGPT) rollout to entire Stanford community by creating custom technical documentation',
@@ -29,7 +27,6 @@ export const experience: Role[] = [
     projectId: 'verazoi-ux-research',
     org: 'Verazoi (PLASMA Accelerator)',
     period: 'Feb 2026 – Present',
-    highlight: true,
     tools: ['Qualtrics', 'Calendly', 'User Interviews'],
     points: [
       'Design and distribute customer research surveys in Qualtrics and conduct in-depth user interviews to surface actionable insights, shaping product direction and messaging.',
@@ -47,7 +44,6 @@ export const experience: Role[] = [
     org: 'PAIRR — Peer & AI Review + Reflection',
     period: 'Jan 2026 – Present',
     location: 'UC Davis',
-    highlight: true,
     tools: ['Python', 'Qualtrics', 'Qualitative Analysis'],
     points: [
       'Processed and cleaned survey data from 500+ college students to measure AI attitude shifts before and after English course completion, revealing perception changes driven by specialized AI interventions.',
