@@ -25,7 +25,7 @@ export const experience: Role[] = [
     ],
   },
   {
-    role: 'User Experience Researcher',
+    role: 'Customer Research and Growth Lead',
     projectId: 'verazoi-ux-research',
     org: 'Verazoi (PLASMA Accelerator)',
     period: 'Feb 2026 – Present',
