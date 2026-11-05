@@ -524,3 +524,7 @@ input, textarea { caret-color: var(--syn-kw); }
   .masthead-in:has(.mobile-menu-toggle:not([hidden])) .nav { display: none; }
   .masthead-in:has(.mobile-menu-toggle:not([hidden])) .nav.is-open { display: flex; }
 }
+
+.experience-poster { margin: 1.5rem 0 0; }
+.experience-poster img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px; }
+.experience-poster figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: .75rem; font: .75rem/1.6 var(--mono); color: var(--muted); }

@@ -5,6 +5,7 @@ export interface Role {
   period: string;
   location?: string;
   points: string[];
+  poster?: { src: string; title: string; alt: string };
   tools?: string[]; // shown as chips when the role is expanded
   highlight?: boolean; // surfaced in the shortened homepage list
 }
@@ -37,6 +38,11 @@ export const experience: Role[] = [
   },
   {
     role: 'Research Assistant',
+    poster: {
+      src: '/pairr-conference-poster.png',
+      title: 'PAIRR: Building AI Literacy through Writing Courses',
+      alt: 'PAIRR conference poster showing the study method, AI literacy results, and conclusions about peer and AI feedback in writing courses.',
+    },
     projectId: 'ai-impact-student-writing',
     org: 'PAIRR — Peer & AI Review + Reflection',
     period: 'Jan 2026 – Present',

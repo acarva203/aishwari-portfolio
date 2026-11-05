@@ -10,7 +10,7 @@ const { roles, open = false } = Astro.props;
 
 <div class="xp">
   {roles.map((r, i) => {
-    const expandable = r.points.length > 0 || Boolean(r.tools?.length);
+    const expandable = r.points.length > 0 || Boolean(r.tools?.length) || Boolean(r.poster);
     const Item = expandable ? 'details' : 'div';
     const Heading = expandable ? 'summary' : 'div';
     return (
@@ -31,6 +31,12 @@ const { roles, open = false } = Astro.props;
           {r.tools && r.tools.length > 0 && <div class="chips chips--light">
             {r.tools.map(tool => <span class="chip">{tool}</span>)}
           </div>}
+          {r.poster && <figure class="experience-poster">
+            <a href={r.poster.src} target="_blank" rel="noopener" aria-label={`${r.poster.title} — open full-size poster in a new tab`}>
+              <img src={r.poster.src} alt={r.poster.alt} width="4608" height="3456" loading="lazy" decoding="async" />
+            </a>
+            <figcaption><span>{r.poster.title}</span><a href={r.poster.src} target="_blank" rel="noopener" aria-label={`View full-size poster: ${r.poster.title} (opens in a new tab)`}>View full-size poster ↗</a></figcaption>
+          </figure>}
       </div>}
     </Item>
   ); })}
