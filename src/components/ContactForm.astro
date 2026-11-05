@@ -1,7 +1,7 @@
 ---
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || '72ff3b51-d1e2-4622-82b4-6e4988f2cd51';
 ---
-      <form id="contact-form" class="form" aria-labelledby="contact-form-heading" novalidate>
+      <form id="contact-form" class="form" aria-labelledby="contact-form-heading" aria-describedby="contact-description" novalidate>
         <input type="hidden" name="access_key" value={accessKey} />
         <input type="hidden" name="subject" value="New message from your portfolio contact form" />
         <input type="hidden" name="from_name" value="Portfolio contact form" />
@@ -9,19 +9,22 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || '72ff3b51-d1e2-4622-82
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         <div class="field">
-          <label for="cf-name">name <span class="req">*</span></label>
+          <label for="cf-name">Name <span class="req" aria-hidden="true">*</span></label>
           <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Your name" />
         </div>
         <div class="field">
-          <label for="cf-email">email <span class="req">*</span></label>
+          <label for="cf-email">Email <span class="req" aria-hidden="true">*</span></label>
           <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
         </div>
         <div class="field">
-          <label for="cf-message">message <span class="req">*</span></label>
+          <label for="cf-message">Message <span class="req" aria-hidden="true">*</span></label>
           <textarea id="cf-message" name="message" required placeholder="What's on your mind?"></textarea>
         </div>
 
-        <button type="submit" class="btn-run">send <span class="arr">→</span></button>
+        <div class="contact-submit">
+          <button type="submit" class="btn-run">Send message <span class="arr" aria-hidden="true">→</span></button>
+          <span class="contact-required">All fields required</span>
+        </div>
         <p class="form-status mono" data-state="" role="status" aria-live="polite"></p>
       </form>
 

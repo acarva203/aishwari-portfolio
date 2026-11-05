@@ -46,7 +46,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="dark" />
     {intro && <script is:inline>
       try {
         if ((!localStorage.getItem('as-intro-dismissed') || new URLSearchParams(location.search).has('test-intro'))) {
@@ -55,17 +55,6 @@ const {
       } catch (e) {}
     </script>}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <script is:inline>
-      // Set theme before paint — no flash. Saved choice wins; else follow OS.
-      (function () {
-        try {
-          var saved = localStorage.getItem('theme');
-          var dark = saved ? saved === 'dark'
-            : window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (dark) document.documentElement.setAttribute('data-theme', 'dark');
-        } catch (e) {}
-      })();
-    </script>
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -89,7 +78,7 @@ const {
     <header class="masthead">
       <div class="masthead-in">
         <div class="brand">
-          <a class="brand-link" href="/" aria-label="Aishwari Sirur — home"><span class="brand-artwork"><ASArtwork /></span></a>
+          <button class="brand-link brand-roll" type="button" aria-label="Roll the AS logo across the navbar"><span class="brand-artwork"><ASArtwork /></span></button>
         </div>
         <button class="mobile-menu-toggle mono" type="button" aria-expanded="false" aria-controls="section-nav" hidden>Menu</button>
         <nav class="nav" id="section-nav" aria-label="Sections">
@@ -97,14 +86,41 @@ const {
           <a class="cta" href="/#education">education</a>
           <a href="/#log">explorations</a>
           <a class="cta kw" href="/#contact">contact →</a>
-          <button class="theme-toggle" type="button" aria-label="Toggle dark mode" data-theme-toggle>
-            <span class="glyph" aria-hidden="true">◐</span> <span data-theme-label>dark</span>
-          </button>
         </nav>
       </div>
     </header>
 
     <script>
+      const logoButton = document.querySelector<HTMLButtonElement>('.brand-roll');
+      const rollingLogo = logoButton?.querySelector<HTMLElement>('.brand-artwork');
+      const navbar = document.querySelector<HTMLElement>('.masthead-in');
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      let roll: Animation | undefined;
+      function stopRoll() {
+        roll?.cancel();
+        roll = undefined;
+      }
+      logoButton?.addEventListener('click', () => {
+        if (!rollingLogo || !navbar || roll) return;
+        if (reducedMotion.matches) {
+          roll = rollingLogo.animate([{ opacity: 1 }, { opacity: .55 }, { opacity: 1 }], { duration: 250 });
+        } else {
+          const logoRect = rollingLogo.getBoundingClientRect();
+          const barRect = navbar.getBoundingClientRect();
+          const distance = Math.max(0, barRect.right - logoRect.right - 20);
+          const turns = distance / (Math.PI * logoRect.width) * 360;
+          roll = rollingLogo.animate([
+            { transform: 'translateX(0) rotate(0deg)', offset: 0 },
+            { transform: `translateX(${distance}px) rotate(${turns}deg)`, offset: .48 },
+            { transform: `translateX(${distance}px) rotate(${turns}deg)`, offset: .52 },
+            { transform: 'translateX(0) rotate(0deg)', offset: 1 },
+          ], { duration: 1800, easing: 'ease-in-out' });
+        }
+        roll.finished.then(stopRoll, stopRoll);
+      });
+      window.addEventListener('resize', stopRoll);
+      reducedMotion.addEventListener('change', stopRoll);
+
       const menuToggle = document.querySelector<HTMLButtonElement>('.mobile-menu-toggle');
       const sectionNav = document.querySelector<HTMLElement>('#section-nav');
       const mobileMenu = matchMedia('(max-width: 560px)');
@@ -137,28 +153,6 @@ const {
       </footer>
     </main>
 
-    <script is:inline>
-      // Theme toggle. Label shows the action (what a click switches TO).
-      (function () {
-        var root = document.documentElement;
-        var btn = document.querySelector('[data-theme-toggle]');
-        var label = document.querySelector('[data-theme-label]');
-        function sync() {
-          var dark = root.getAttribute('data-theme') === 'dark';
-          if (label) label.textContent = dark ? 'light' : 'dark';
-        }
-        sync();
-        if (btn) {
-          btn.addEventListener('click', function () {
-            var dark = root.getAttribute('data-theme') === 'dark';
-            if (dark) root.removeAttribute('data-theme');
-            else root.setAttribute('data-theme', 'dark');
-            try { localStorage.setItem('theme', dark ? 'light' : 'dark'); } catch (e) {}
-            sync();
-          });
-        }
-      })();
-    </script>
     <script is:inline>
       // Easter eggs — two, both leaning into the notebook-as-REPL fiction.
       (function () {

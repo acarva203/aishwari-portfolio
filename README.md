@@ -1,6 +1,6 @@
 # Aishwari Sirur — Portfolio
 
-A personal AI engineering portfolio built with Astro and TypeScript. The site uses a computational notebook style, with numbered cells, syntax colors, light and dark themes, and an animated AS identity.
+A personal AI engineering portfolio built with Astro and TypeScript. The site uses a computational notebook style, with numbered cells, syntax colors, a dark theme, and an animated AS identity.
 
 ## Local development
 
@@ -41,7 +41,7 @@ Navigation uses homepage anchors. Legacy routes redirect to the relevant homepag
 | File or directory | Purpose |
 | --- | --- |
 | `src/pages/index.astro` | Homepage content, sections, intro interaction, and notes carousel |
-| `src/layouts/Notebook.astro` | Shared page shell, header, mobile menu, themes, and metadata |
+| `src/layouts/Notebook.astro` | Shared page shell, header, mobile menu, and metadata |
 | `src/components/ASArtwork.astro` | Original logo and Emergence animation |
 | `public/assets/rings/` | Shared AS artwork SVG assets |
 | `src/styles/global.css` | Site styles and responsive layouts |

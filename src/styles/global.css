@@ -6,41 +6,6 @@
 /* impeccable-disable codex-grid-background -- the faint graph-paper grid is the committed notebook world (see DESIGN.md), not decorative chrome */
 
 :root {
-  --paper: #f6f7f9;
-  --surface: #ffffff;
-  --code-bg: #16181d;
-  --code-bg-2: #1e2128;
-  --ink: #1b1e24;
-  --ink-soft: #3a3f4a;
-  --ink-inv: #e7eaf0;
-  --ink-inv-soft: #a7afbe;
-  --muted: #6b7280;
-  --rule: #e2e5ea;
-  --rule-dark: #2b2f38;
-
-  /* syntax roles */
-  --syn-kw: #c026d3;   /* prompt / keyword — In[]/Out[] */
-  --syn-str: #059669;  /* string */
-  --syn-num: #d97706;  /* number / output */
-  --syn-fn: #2563eb;   /* function / link */
-  --syn-com: #94a3b8;  /* comment */
-  --syn-str-text: #047857; /* darker green for green TEXT on light (AA) */
-  --grid: rgba(27, 30, 36, 0.022); /* whisper-faint graph-paper lines */
-
-  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
-
-  --col: 46rem;        /* reading column */
-  --gutter: 5.5rem;    /* execution-count gutter width */
-  --step: 1.5rem;
-
-  color-scheme: light;
-}
-
-/* Dark theme — the notebook at night. Cells go dark; output blocks go darker
-   still so the light/dark cell rhythm survives. Syntax roles brighten for
-   contrast on the dark ground. */
-:root[data-theme='dark'] {
   --paper: #0e1014;
   --surface: #181b21;
   --code-bg: #0a0b0e;
@@ -53,13 +18,21 @@
   --rule: #262a32;
   --rule-dark: #2b2f38;
 
+
   --syn-kw: #e879f9;
   --syn-str: #34d399;
   --syn-num: #fbbf24;
   --syn-fn: #60a5fa;
   --syn-com: #94a3b8;
-  --syn-str-text: #34d399; /* already bright enough on the dark ground */
+  --syn-str-text: #34d399;
   --grid: rgba(231, 234, 240, 0.028);
+
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --col: 46rem;
+  --gutter: 5.5rem;
+  --step: 1.5rem;
 
   color-scheme: dark;
 }
@@ -162,19 +135,11 @@ a:hover { text-decoration-color: var(--syn-fn); }
 .nav a:hover { color: var(--ink); }
 .nav .cta { color: var(--syn-fn); }
 .nav .cta.kw { color: var(--syn-kw); }
-.theme-toggle {
-  font-family: var(--mono); font-size: 13px; color: var(--muted);
-  background: none; border: 1px solid var(--rule); border-radius: 6px;
-  padding: 0.4rem 0.6rem; cursor: pointer; line-height: 1; white-space: nowrap;
-}
-.theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
-.theme-toggle .glyph { color: var(--syn-num); }
 @media (max-width: 720px) {
   .masthead-in { flex-wrap: wrap; }
   .nav { width: 100%; justify-content: space-between; }
   .nav { gap: 0.8rem; }
-  .theme-toggle [data-theme-label] { display: none; }
-}
+  }
 
 /* ============================================================
    Cells
@@ -386,8 +351,7 @@ h1,h2,h3 { font-family: var(--sans); font-weight: 700; letter-spacing: -0.02em; 
 .btn-run .arr { color: var(--syn-num); }
 .form-status { font-family: var(--mono); font-size: 13px; min-height: 1.3em; margin: 0; }
 .form-status[data-state='ok'] { color: var(--syn-str-text); }
-.form-status[data-state='err'] { color: #dc2626; }
-:root[data-theme='dark'] .form-status[data-state='err'] { color: #f87171; }
+.form-status[data-state='err'] { color: #f87171; }
 .hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* ---- goals / progress bars ---- */
@@ -453,7 +417,30 @@ h1,h2,h3 { font-family: var(--sans); font-weight: 700; letter-spacing: -0.02em; 
 .project-meta { font-size: .8rem; color: var(--muted); }
 .project-content .article-body { margin-top: 1rem; }
 .project-links { display: flex; gap: 1.4rem; font-size: .85rem; }
-#contact .form { margin-top: 2rem; }
+/* Contact is a single notebook output, with two ways to connect. */
+.contact-panel { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 2rem; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); }
+.contact-intro h2 { margin: 0 0 .85rem; font-size: clamp(1.6rem, 3vw, 2rem); line-height: 1.15; text-wrap: balance; }
+.contact-intro > p { margin: 0; color: var(--ink-soft); font-size: 1rem; }
+.contact-profiles { display: grid; margin-top: 2rem; }
+.contact-profiles a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; border-top: 1px solid var(--rule); text-decoration: none; }
+.contact-profiles strong { font-family: var(--mono); font-size: .8rem; font-weight: 500; }
+.contact-link-detail { display: block; color: var(--ink-soft); font-size: .85rem; }
+.contact-profiles a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+#contact .form { margin: 0; max-width: none; min-width: 0; gap: 1rem; }
+#contact .field input, #contact .field textarea { background: var(--paper); }
+#contact .field input::placeholder, #contact .field textarea::placeholder { color: var(--muted); opacity: 1; }
+#contact .field textarea { min-height: 9rem; }
+.contact-submit { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
+.contact-required { font-size: .75rem; color: var(--ink-soft); }
+#contact .btn-run { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+#contact .btn-run .arr { color: inherit; }
+@media (max-width: 720px) {
+  .contact-panel { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+  .contact-profiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+}
+@media (max-width: 380px) {
+  .contact-profiles { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
 .entry-blurb, .entry-refs { display: block; }
 .skip-link { position: fixed; top: -5rem; left: 1rem; z-index: 100; padding: .8rem 1rem; background: var(--surface); }
 .skip-link:focus { top: 1rem; }
@@ -487,6 +474,10 @@ input, textarea { caret-color: var(--syn-kw); }
 .hero-socials { display: inline-flex; align-items: center; gap: .5rem; }
 .hero-actions .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; color: var(--muted); border-radius: 6px; }
 .hero-actions .social-icon:hover { color: var(--syn-fn); background: var(--surface); }
+
+.experience-poster { margin: 1.5rem 0 0; }
+.experience-poster img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px; }
+.experience-poster figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: .75rem; font: .75rem/1.6 var(--mono); color: var(--muted); }
 
 /* Figma Make Original logo and Emergence landing artwork. */
 .brand-link { display: inline-flex; align-items: center; gap: .65rem; }
@@ -524,7 +515,6 @@ input, textarea { caret-color: var(--syn-kw); }
   .masthead-in:has(.mobile-menu-toggle:not([hidden])) .nav { display: none; }
   .masthead-in:has(.mobile-menu-toggle:not([hidden])) .nav.is-open { display: flex; }
 }
-
-.experience-poster { margin: 1.5rem 0 0; }
-.experience-poster img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px; }
-.experience-poster figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: .75rem; font: .75rem/1.6 var(--mono); color: var(--muted); }
+.brand-roll { padding: 0; border: 0; background: transparent; cursor: pointer; }
+.brand-roll .brand-artwork { position: relative; z-index: 2; pointer-events: none; }
+.brand-roll:focus-visible { outline: 2px solid var(--syn-fn); outline-offset: 4px; border-radius: 50%; }
