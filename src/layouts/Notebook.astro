@@ -25,6 +25,7 @@
 */
 import '../styles/global.css';
 import ASArtwork from '../components/ASArtwork.astro';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   intro?: boolean;
@@ -83,6 +84,7 @@ const {
     </script>
   </head>
   <body>
+    <Analytics />
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="masthead">
       <div class="masthead-in">

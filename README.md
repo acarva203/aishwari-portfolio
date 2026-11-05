@@ -79,3 +79,17 @@ This is a static Astro site. Configure the hosting service with:
 For Vercel, import the repository and select the branch that should deploy. Current portfolio development is on `codex/portfolio`; pushing to another branch only updates production if the hosting project is configured to deploy it.
 
 Before publishing, verify the contact destination and social links, replace `public/resume.pdf` if it will be linked, and confirm the site URL in `astro.config.mjs`. Keep URLs and content in `public/robots.txt` and `public/llms.txt` consistent with the published site.
+
+## Vercel Analytics
+
+The shared layout includes Vercel Web Analytics for page views. Enable **Web Analytics** in the Vercel project dashboard and deploy to start collecting data.
+
+The landing intro sends these custom events in production:
+
+- `intro_viewed`: the first-visit intro is shown.
+- `intro_clicked`: the visitor starts the animation; `wait_ms` measures time before clicking.
+- `intro_completed`: the transition into the portfolio completes.
+
+Events include a `reduced_motion` boolean. No names, email addresses, or form contents are attached. Local development and `?test-intro` skip these custom events. Return visits that skip the intro do not generate intro events.
+
+Custom events require a Vercel Pro or Enterprise plan; see [Vercel's custom events documentation](https://vercel.com/docs/analytics/custom-events). Page views and events appear in the project's Web Analytics dashboard after deployment.

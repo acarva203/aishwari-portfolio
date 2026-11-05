@@ -253,14 +253,25 @@ const idFor = (cats: string[], n: number) =>
 </Notebook>
 
 <script>
+  import { track } from '@vercel/analytics';
+
   const root = document.documentElement;
   const intro = document.querySelector<HTMLElement>('.landing-artwork');
   const artwork = intro?.querySelector('.as-emergence');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   let finished = false;
+  const introShown = root.classList.contains('intro-active');
+  const testIntro = new URLSearchParams(location.search).has('test-intro');
+  const viewedAt = performance.now();
+  function trackIntro(event: string, properties: Record<string, string | number | boolean> = {}) {
+    if (import.meta.env.PROD && !testIntro) {
+      try { track(event, { reduced_motion: motion.matches, ...properties }); } catch {}
+    }
+  }
   function finishIntro() {
     if (finished) return;
     finished = true;
+    if (introShown) trackIntro('intro_completed');
     root.classList.remove('intro-active', 'intro-minimizing');
     const hadFocus = document.activeElement === intro;
     intro?.remove();
@@ -268,12 +279,14 @@ const idFor = (cats: string[], n: number) =>
     try { localStorage.setItem('as-intro-dismissed', 'true'); } catch {}
   }
   if (root.classList.contains('intro-active') && artwork) {
+    trackIntro('intro_viewed');
     let started = false;
     const hint = intro?.querySelector('.intro-hint');
     artwork.classList.add('is-waiting');
     intro?.addEventListener('click', async () => {
       if (started) return;
       started = true;
+      trackIntro('intro_clicked', { wait_ms: Math.round(performance.now() - viewedAt) });
       await Promise.all(assets);
       if (finished) return;
       artwork.classList.remove('is-waiting');
